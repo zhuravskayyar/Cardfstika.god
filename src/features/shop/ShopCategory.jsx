@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useGame } from '../../store/GameContext.jsx';
 import CardPackItem from './CardPackItem.jsx';
 import BonusItem from './BonusItem.jsx';
+import ShopDetails from './ShopDetails.jsx';
 import RowButton from '../../components/ui/RowButton.jsx';
 import { CARD_PACKS, BOOSTERS } from './shopConfig.js';
 import { buyShopItem } from './shopLogic.js';
@@ -10,6 +12,7 @@ import banner3 from '../../assets/shop/cardsshop/banner_3.png';
 import './shop.css';
 
 const BANNER_MAP = { purple: banner1, green: banner2, orange: banner3 };
+const CARD_PACK_ORDER = ['gold_150', 'gold_50', 'silver_500'];
 
 /** Банер категорії */
 function CategoryBanner({ image, alt }) {
@@ -31,13 +34,19 @@ function ShopDeferredPanel({ title, children }) {
   );
 }
 
-function CardsSection({ onBuy }) {
+function CardsSection({ onBuy, onDetails }) {
+  const orderedPacks = CARD_PACK_ORDER
+    .map((id) => CARD_PACKS.find((item) => item.id === id))
+    .filter(Boolean);
+
   return (
     <>
-      <CategoryBanner image={BANNER_MAP.purple} alt="Магічні карти" />
-      <div className="shop-items-list">
-        {CARD_PACKS.map((item) => (
-          <CardPackItem key={item.id} item={item} onBuy={onBuy} />
+      <div className="shop-pack-section-title">
+        <span>По одній карті</span>
+      </div>
+      <div className="shop-items-list shop-items-list--packs">
+        {orderedPacks.map((item) => (
+          <CardPackItem key={item.id} item={item} onBuy={onBuy} onDetails={onDetails} />
         ))}
       </div>
     </>
@@ -78,6 +87,7 @@ const SECTIONS = {
 
 export default function ShopCategory({ sectionId, onBack, onNavigate, onPurchased }) {
   const { state, dispatch } = useGame();
+  const [detailItemId, setDetailItemId] = useState(null);
 
   function handleBuy(item, options = {}) {
     const result = buyShopItem(item, {
@@ -102,22 +112,34 @@ export default function ShopCategory({ sectionId, onBack, onNavigate, onPurchase
   }
 
   const Section = SECTIONS[sectionId];
+  const detailItem = sectionId === 'cards'
+    ? CARD_PACKS.find((item) => item.id === detailItemId)
+    : null;
 
   return (
     <div className="shop-category">
-      {Section ? (
-        <Section onBuy={handleBuy} />
+      {detailItem ? (
+        <ShopDetails
+          key={detailItem.id}
+          item={detailItem}
+          onBuy={handleBuy}
+          onBack={() => setDetailItemId(null)}
+        />
+      ) : Section ? (
+        <Section onBuy={handleBuy} onDetails={setDetailItemId} />
       ) : (
         <div className="shop-category__empty">Розділ не знайдено</div>
       )}
 
       {/* Кнопки дій — скролиться разом із контентом */}
-      <div className="shop-category-actions">
-        <RowButton title="Назад в магазин" onClick={onBack} />
-        <RowButton title="Бойова колода" onClick={() => dispatch({ type: 'SET_TAB', payload: 'deck' })} />
-        <RowButton title="Завдання" onClick={() => dispatch({ type: 'SET_TAB', payload: 'tasks' })} />
-        <RowButton title="Купити золото" onClick={() => onNavigate?.('gold')} />
-      </div>
+      {!detailItem && (
+        <div className="shop-category-actions">
+          <RowButton title="Назад в магазин" onClick={onBack} />
+          <RowButton title="Бойова колода" onClick={() => dispatch({ type: 'SET_TAB', payload: 'deck' })} />
+          <RowButton title="Завдання" onClick={() => dispatch({ type: 'SET_TAB', payload: 'tasks' })} />
+          <RowButton title="Купити золото" onClick={() => onNavigate?.('gold')} />
+        </div>
+      )}
     </div>
   );
 }

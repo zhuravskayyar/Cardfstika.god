@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  base: '/Cardfstika.god/',
   plugins: [react()],
   server: {
     host: true,   // доступно за LAN IP (не тільки localhost)
