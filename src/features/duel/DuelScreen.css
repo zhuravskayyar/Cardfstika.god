@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: center;
   color: #fffde0;
-  background: url("/src/assets/bt/bt_green.png") center / 100% 100% no-repeat;
+  background: url("../../assets/bt/bt_green.png") center / 100% 100% no-repeat;
   filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.72));
   font-family: var(--font-title);
   font-size: 12px;
@@ -241,7 +241,7 @@
   grid-template-columns: 50px minmax(0, 1fr) 24px;
   align-items: center;
   color: var(--list-text);
-  background-image: url("/src/assets/button.png");
+  background-image: url("../../assets/button.png");
   background-size: 100% 122%;
   background-position: center;
   background-repeat: no-repeat;

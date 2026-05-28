@@ -403,7 +403,7 @@
   padding: 0 18px 0 46px;
 
   border: none;
-  background: url("/src/assets/button.png") center / 100% 100% no-repeat;
+  background: url("../../assets/button.png") center / 100% 100% no-repeat;
 
   font-family: var(--font-title);
   font-size: 18px;
@@ -541,7 +541,7 @@
   width: 176px;
   height: 38px;
   border: none;
-  background: url("/src/assets/bage/green.png") center / 100% 100% no-repeat;
+  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
   font-family: var(--font-title);
   font-size: 17px;
   font-weight: 900;
@@ -580,7 +580,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("/src/assets/bage/green.png") center / 100% 100% no-repeat;
+  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
   color: #e9ffcf;
   font-family: var(--font-title);
   font-size: 13px;
@@ -1029,7 +1029,7 @@
   height: 100%;
   gap: 5px;
   color: #fff7bd;
-  background: url("/src/assets/bage/green.png") center / 100% 100% no-repeat;
+  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
   font-size: 17px;
   line-height: 1;
   font-weight: 900;
@@ -1039,7 +1039,7 @@
 }
 
 .shop-items-list--packs .shop-pack-item__buy[data-currency="silver"] {
-  background-image: url("/src/assets/bt/bt_blue.png");
+  background-image: url("../../assets/bt/bt_blue.png");
   color: #e9f6ff;
   text-shadow:
     0 1px 0 #001b28,
@@ -1303,7 +1303,7 @@
   font-weight: 900;
   line-height: 1;
   border: none;
-  background: url("/src/assets/bage/green.png") center / 100% 100% no-repeat;
+  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
   text-shadow:
     0 1px 0 #162400,
     0 0 5px rgba(0, 0, 0, 0.95);

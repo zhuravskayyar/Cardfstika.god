@@ -28,7 +28,7 @@
   font-weight: 800;
   line-height: 1;
   padding: 0 48px 6px;
-  background: url('/src/assets/bage/green.png') center / 100% 100% no-repeat;
+  background: url('../../assets/bage/green.png') center / 100% 100% no-repeat;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -203,7 +203,7 @@
   padding: 0 12px 0 9px;
   color: var(--list-text);
   text-align: left;
-  background-image: url('/src/assets/button.png');
+  background-image: url('../../assets/button.png');
   background-size: 100% 122%;
   background-position: center;
   background-repeat: no-repeat;

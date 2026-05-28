@@ -49,7 +49,7 @@
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
-  background-image: url('/src/assets/bage/green.png');
+  background-image: url('../../assets/bage/green.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -305,7 +305,7 @@
   line-height: 1;
   text-align: left;
   text-shadow: 0 1px 2px #000;
-  background-image: url('/src/assets/button.png');
+  background-image: url('../../assets/button.png');
   background-size: 100% 122%;
   background-position: center;
   background-repeat: no-repeat;

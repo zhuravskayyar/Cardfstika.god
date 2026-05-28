@@ -1,11 +1,14 @@
 import { memo } from 'react';
 import { useGame } from '../../store/GameContext.jsx';
+import homeIcon from '../../assets/botmenu/home.png';
+import profileIcon from '../../assets/botmenu/profil.png';
+import guildIcon from '../../assets/botmenu/guild.png';
 import '../../styles/components/BottomNav.css';
 
 const TABS = [
-  { id: 'home', img: '/src/assets/botmenu/home.png', alt: 'Головна' },
-  { id: 'profile', img: '/src/assets/botmenu/profil.png', alt: 'Профіль' },
-  { id: 'guild', img: '/src/assets/botmenu/guild.png', alt: 'Гільдія' },
+  { id: 'home', img: homeIcon, alt: 'Головна' },
+  { id: 'profile', img: profileIcon, alt: 'Профіль' },
+  { id: 'guild', img: guildIcon, alt: 'Гільдія' },
 ];
 
 function BottomNav() {

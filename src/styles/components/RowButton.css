@@ -10,7 +10,7 @@
   padding: 0 12px 0 9px;
   color: var(--list-text);
   text-align: left;
-  background-image: url('/src/assets/button.png');
+  background-image: url('../../assets/button.png');
   background-size: 100% 122%;
   background-position: center;
   background-repeat: no-repeat;
