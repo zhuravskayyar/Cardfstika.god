@@ -1,0 +1,202 @@
+# Список id -> name (189 записів)
+
+starter_wind_squire — Вітряний зброєносець
+starter_river_apprentice — Учень річки
+starter_ember_guard — Жевріючий вартовий
+starter_root_keeper — Кореневий сторож
+starter_cloud_archer — Хмарний лучник
+starter_brook_healer — Джерельна цілителька
+starter_ash_blade — Попільний клинок
+starter_stone_pawn — Кам’яний ратник
+starter_mist_wanderer — Мандрівник туману
+
+slavic_perun — Перун
+slavic_veles — Велес
+slavic_svarog — Сварог
+slavic_dazhbog — Дажбог
+slavic_mokosh — Мокош
+slavic_stribog — Стрибог
+slavic_morana — Морана
+slavic_lada — Лада
+slavic_yarilo — Ярило
+slavic_domovyk — Домовик
+slavic_lisovyk — Лісовик
+slavic_vodyanyk — Водяник
+slavic_rusalka — Русалка
+slavic_polevyk — Польовик
+slavic_bannik — Банник
+slavic_baba_yaga — Баба Яга
+slavic_zmey_gorynych — Змій Горинич
+slavic_kikimora — Кікімора
+
+greek_zeus — Зевс
+greek_poseidon — Посейдон
+greek_hades — Аїд
+greek_hera — Гера
+greek_athena — Афіна
+greek_apollo — Аполлон
+greek_artemis — Артеміда
+greek_ares — Арес
+greek_demeter — Деметра
+greek_satyr — Сатир
+greek_harpy — Гарпія
+greek_centaur — Кентавр
+greek_minotaur — Мінотавр
+greek_medusa — Медуза
+greek_cerberus — Цербер
+greek_hydra — Гідра
+greek_pegasus — Пегас
+greek_chimera — Химера
+
+norse_odin — Одін
+norse_thor — Тор
+norse_freyja — Фрейя
+norse_loki — Локі
+norse_tyr — Тюр
+norse_baldr — Бальдр
+norse_heimdall — Геймдалль
+norse_frigg — Фріґґ
+norse_skadi — Скаді
+norse_dverg — Дверг
+norse_troll — Троль
+norse_valkyrie — Валькірія
+norse_fenrir — Фенрір
+norse_jormungandr — Йормунґанд
+norse_sleipnir — Слейпнір
+norse_nidhogg — Нідгьоґґ
+norse_fire_giant — Вогняний йотун
+norse_frost_giant — Крижаний йотун
+
+egyptian_ra — Ра
+egyptian_osiris — Осіріс
+egyptian_isis — Ісіда
+egyptian_set — Сет
+egyptian_horus — Гор
+egyptian_anubis — Анубіс
+egyptian_thoth — Тот
+egyptian_sekhmet — Сехмет
+egyptian_bastet — Бастет
+egyptian_ba_bird — Птах Ба
+egyptian_ka_guardian — Охоронець Ка
+egyptian_scarab_spirit — Дух скарабея
+egyptian_maat_feather — Перо Маат
+egyptian_ushabti — Ушебті
+egyptian_sphinx — Сфінкс
+egyptian_serpopard — Серпопард
+egyptian_ammit — Амміт
+egyptian_akh_spirit — Дух Ах
+
+celtic_dagda — Дагда
+celtic_morrigan — Морріґан
+celtic_brighid — Бріґід
+celtic_lugh — Луг
+celtic_cernunnos — Кернунн
+celtic_manannan — Мананнан
+celtic_danu — Дану
+celtic_nuada — Нуада
+celtic_aengus — Енгус
+celtic_leprechaun — Лепрекон
+celtic_banshee — Банші
+celtic_pooka — Пука
+celtic_kelpie — Келпі
+celtic_dullahan — Дуллахан
+celtic_fairy — Фейрі
+celtic_green_man — Зелений чоловік
+celtic_selkie — Селкі
+celtic_redcap — Редкап
+
+japanese_amaterasu — Аматерасу
+japanese_susanoo — Сусаноо
+japanese_tsukuyomi — Цукуйомі
+japanese_inari — Інарі
+japanese_ryujin — Рюдзін
+japanese_fujin — Фудзін
+japanese_raijin — Райдзін
+japanese_kagutsuchi — Кагуцуті
+japanese_konohanasakuya — Коноханасакуя
+japanese_kappa — Каппа
+japanese_tengu — Тенґу
+japanese_kitsune — Кіцуне
+japanese_oni — Оні
+japanese_yuki_onna — Юкі-онна
+japanese_nurikabe — Нурікабе
+japanese_rokurokubi — Рокурокубі
+japanese_umibozu — Умібодзу
+japanese_tsuchigumo — Цутіґумо
+
+hindu_indra — Індра
+hindu_agni — Агні
+hindu_varuna — Варуна
+hindu_vayu — Ваю
+hindu_surya — Сур’я
+hindu_yama — Яма
+hindu_lakshmi — Лакшмі
+hindu_saraswati — Сарасваті
+hindu_kubera — Кубера
+hindu_vanara_scout — Ванара-розвідник
+hindu_hanuman — Хануман
+hindu_garuda — Ґаруда
+hindu_naga — Наґа
+hindu_rakshasa — Ракшас
+hindu_apsara — Апсара
+hindu_jatayu — Джатаю
+hindu_kumbhakarna — Кумбхакарна
+hindu_makara — Макара
+
+mesopotamian_marduk — Мардук
+mesopotamian_ishtar — Іштар
+mesopotamian_enki — Енкі
+mesopotamian_enlil — Енліль
+mesopotamian_utu — Уту
+mesopotamian_ereskigal — Ерешкігаль
+mesopotamian_nanna — Нанна
+mesopotamian_ninurta — Нінурта
+mesopotamian_tiamat — Тіамат
+mesopotamian_lamassu_lesser — Малий Ламассу
+mesopotamian_lamassu — Ламассу
+mesopotamian_mushussu — Мушхушшу
+mesopotamian_utukku — Утукку
+mesopotamian_pazuzu — Пазузу
+mesopotamian_gallu — Галлу
+mesopotamian_kusarikku — Кусарікку
+mesopotamian_sirrush — Сірруш
+mesopotamian_apkallu — Апкаллу
+
+chinese_jade_emperor — Нефритовий імператор
+chinese_guanyin — Ґуаньїнь
+chinese_nezha — Нечжа
+chinese_leigong — Лейґун
+chinese_longwang — Володар драконів
+chinese_zhu_rong — Чжу Жун
+chinese_houtu — Хоуту
+chinese_xiwangmu — Сі Ван Му
+chinese_chang_e — Чан’е
+chinese_huli_jing — Хулі-цзін
+chinese_jiangshi — Цзянші
+chinese_qilin — Цілінь
+chinese_pixiu — Пісю
+chinese_ba_she — Ба Ше
+chinese_fenghuang — Фенхуан
+chinese_white_tiger — Білий тигр
+chinese_black_tortoise — Чорна черепаха
+chinese_azure_dragon — Лазуровий дракон
+
+aztec_quetzalcoatl — Кетцалькоатль
+aztec_huitzilopochtli — Уїцилопочтлі
+aztec_tlaloc — Тлалок
+aztec_tezcatlipoca — Тескатліпока
+aztec_xipe_totec — Шіпе-Тотек
+maya_kukulkan — Кукулькан
+maya_chaac — Чаак
+maya_itzamna — Іцамна
+maya_ixchel — Ішчель
+
+world_dragon — Дракон
+world_phoenix — Фенікс
+world_leviathan — Левіафан
+world_behemoth — Бегемот
+world_griffin — Грифон
+world_basilisk — Василіск
+world_manticore — Мантикора
+world_roc — Рух
+world_kraken — Кракен
