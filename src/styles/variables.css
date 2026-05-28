@@ -1,0 +1,76 @@
+:root {
+  --font-title: "Cinzel", Georgia, serif;
+  --font-decor: "Cinzel Decorative", "Cinzel", Georgia, serif;
+  --font-body: "EB Garamond", Georgia, serif;
+
+  /* Фони */
+  --bg-dark:        #0d0e11;
+  --bg-card:        #16181d;
+  --bg-topbar:      #12141a;
+  --bg-bottomnav:   #12141a;
+
+  /* Кнопки / плитки */
+  --btn-bg-start:   #3a3e44;
+  --btn-bg-end:     #1e2023;
+  --btn-border:     #2a2d33;
+  --btn-shadow:     #0a0b0d;
+
+  /* Градієнти плиток */
+  --grad-duel-start:       #c0392b;
+  --grad-duel-end:         #7b1a1a;
+  --grad-campaign-start:   #27ae60;
+  --grad-campaign-end:     #1a5c34;
+  --grad-arena-start:      #8e44ad;
+  --grad-arena-end:        #4a1a6b;
+  --grad-guild-start:      #2980b9;
+  --grad-guild-end:        #1a4d7b;
+  --grad-cards-start:      #d35400;
+  --grad-cards-end:        #7b2e00;
+  --grad-tournament-start: #f39c12;
+  --grad-tournament-end:   #8a5500;
+
+  /* Типографіка */
+  --text-main:      #ffffff;
+  --text-dim:       #8fa0b0;
+  --text-muted:     #4a5568;
+
+  /* Акценти */
+  --gold:           #f2c94c;
+  --gold-dark:      #c49a20;
+  --green-dot:      #00e676;
+  --red-badge:      #e53935;
+  --text-title-gold: #f2d47a;
+  --text-main-parchment: #ead9a6;
+  --text-muted-gold: #d9c28a;
+  --text-help-jade: #7fcfc0;
+  --text-help-jade-hover: #b7f2df;
+  --shadow-black: #000;
+
+  /* Розміри */
+  --radius-sm:      6px;
+  --radius-md:      10px;
+  --radius-lg:      16px;
+  --topbar-h:       56px;
+  --bottomnav-h:    60px;
+
+  /* Анімації */
+  --transition-fast: 0.1s ease;
+  --transition-med:  0.2s ease;
+
+  /* Dark Fantasy Bronze */
+  --bronze-light:   #c9922a;
+  --bronze-mid:     #8b6a14;
+  --bronze-dark:    #3a2806;
+  --bronze-shadow:  #1a0f00;
+  --brass-top:      #5a4520;
+  --brass-mid:      #3d2e10;
+  --brass-dark:     #2a1e08;
+  --tile-text:      #c9922a;
+  --tile-stat:      rgba(180, 150, 80, 0.85);
+  --list-text:      #e0c870;
+  --list-icon-bg:   #1c1508;
+
+  /* Внутрішні відступи для меню та кнопок щоб відповідати фоновій рамці */
+  --row-menu-inset-left: 24px;
+  --row-menu-inset-right: 58px;
+}

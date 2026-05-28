@@ -1,0 +1,15 @@
+.grid-menu {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(12px, 4.5vw, 24px);
+  row-gap: clamp(5px, 1dvh, 9px);
+  flex: 0 0 var(--grid-menu-height);
+  min-height: 0;
+  padding: clamp(2px, 0.5dvh, 5px) var(--row-menu-inset-right) 0 var(--row-menu-inset-left);
+}
+
+.home-screen .grid-menu {
+  align-self: stretch;
+  padding-top: 0;
+}

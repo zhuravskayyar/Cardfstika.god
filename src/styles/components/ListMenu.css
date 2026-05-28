@@ -1,0 +1,15 @@
+.list-menu {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 var(--list-menu-height);
+  min-height: 0;
+  padding: clamp(2px, 0.35dvh, 4px) var(--row-menu-inset-right) 0 var(--row-menu-inset-left);
+  gap: clamp(1px, 0.25dvh, 3px);
+}
+
+.home-screen .list-menu {
+  align-self: stretch;
+  justify-content: center;
+  padding-top: 0;
+  gap: 2px;
+}

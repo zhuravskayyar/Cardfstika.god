@@ -1,0 +1,66 @@
+.buy-gold-bar {
+  margin: 4px 12px 12px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(242, 201, 76, 0.3);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.buy-gold-bar:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(242, 201, 76, 0.2);
+}
+
+.buy-gold-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.buy-gold-bar__icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.buy-gold-bar__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.buy-gold-bar__title {
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1200;
+}
+
+.buy-gold-bar__subtitle {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: #5a3e00;
+}
+
+.buy-gold-bar__timer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+.buy-gold-bar__timer-icon {
+  font-size: 13px;
+}
+
+.buy-gold-bar__timer-value {
+  font-family: var(--font-title);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #1a1200;
+}

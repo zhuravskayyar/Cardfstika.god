@@ -1,0 +1,161 @@
+/* === PATCH: unified bg.png on game-screen + shop-screen-wrapper only === */
+/* Applied fixes: background image centralization, bottom-nav scroll, shop card normalization */
+
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+*::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   1. Remove all background-image duplicates
+════════════════════════════════════════════════════════ */
+
+/* Only these two should have --game-bg-image: */
+/* .game-screen (GameScreen.css) */
+/* .shop-screen-wrapper (shop.css) */
+
+/* All other elements must NOT have background images: */
+.shop-screen,
+.shop-screen__body,
+.shop-category,
+.shop-home,
+.shop-items-list,
+.shop-category-banner,
+.shop-category-actions,
+.shop-home__row-buttons,
+.bottom-nav,
+.bottom-nav__tab,
+.list-menu,
+.grid-menu,
+.deck-screen,
+.collections-screen,
+.game-screen__content,
+.menu-spacer,
+.top-bar {
+  background-image: none !important;
+  background: transparent !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   2. BottomNav positioning and styling
+════════════════════════════════════════════════════════ */
+
+/* Bottom nav is part of the scroll, not overlay */
+.bottom-nav {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100%;
+  height: 96px;
+  min-height: 96px;
+  flex: 0 0 96px;
+  margin-top: 0;
+  z-index: 1;
+  overflow: visible;
+}
+
+.bottom-nav__tab img {
+  width: 112%;
+  height: 112%;
+  transform: translateY(5px);
+}
+
+/* ════════════════════════════════════════════════════════
+   3. Content scrolling structure
+════════════════════════════════════════════════════════ */
+
+.game-screen__content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 0 !important;
+}
+
+.game-screen__content.game-screen__content--home {
+  overflow: hidden !important;
+}
+
+.game-screen__content--home .home-screen {
+  overflow: hidden;
+}
+
+.game-screen__content--home .bottom-nav {
+  margin-top: 0;
+}
+
+.shop-screen__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+/* ════════════════════════════════════════════════════════
+   4. Shop category fixes
+════════════════════════════════════════════════════════ */
+
+.shop-category {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0 0 !important;
+  gap: 0;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.shop-bonus-hint {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-muted-gold);
+  padding: 10px 0 8px;
+  opacity: 0.9;
+}
+
+.shop-items-list {
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  overflow: visible;
+}
+
+.shop-category-actions {
+  width: 100%;
+  padding: 12px var(--row-menu-inset-right, 58px) 10px var(--row-menu-inset-left, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: visible;
+}
+
+.deck-screen,
+.collections-screen {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.collections-panel {
+  min-height: 100%;
+  padding: 7px 10px !important;
+}
+
+.deck-panel {
+  min-height: 100%;
+  padding: 4px var(--row-menu-inset-right) 8px var(--row-menu-inset-left) !important;
+}

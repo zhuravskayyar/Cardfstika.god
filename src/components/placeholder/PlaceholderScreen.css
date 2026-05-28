@@ -1,0 +1,27 @@
+.placeholder-route {
+  flex: 1 0 auto;
+  min-height: calc(100dvh - 58px - 96px);
+  padding: 7px 0 8px;
+  background: transparent !important;
+  color: var(--text-main-parchment);
+  font-family: var(--font-body);
+}
+
+.placeholder-route__title {
+  width: calc(100% - var(--row-menu-inset-left) - var(--row-menu-inset-right));
+  height: 64px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e9ffcf;
+  font-family: var(--font-decor);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  background: url('/src/assets/bage/green.png') center / 100% 100% no-repeat;
+  border: 0;
+  text-shadow: 0 1px 2px #000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.75);
+}

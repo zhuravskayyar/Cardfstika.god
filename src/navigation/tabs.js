@@ -1,0 +1,26 @@
+export const PLACEHOLDER_TABS = {
+  campaign: 'Кампанія',
+  tournament: 'Турнір',
+  arena: 'Арена',
+  invasion: 'Нашестя',
+  tasks: 'Завдання',
+  diamonds: 'Алмазні нагороди',
+  equipment: 'Спорядження',
+  best: 'Кращі',
+  guild: 'Гільдія',
+  mail: 'Моя пошта',
+  records: 'Рекорди',
+  gifts: 'Подарунки від магів',
+  duelRating: 'Рейтинг дуелей',
+  duelBattle: 'Бій',
+  duelSearch: 'Пошук суперника',
+  weakCards: 'Слабкі карти',
+  shopDetails: 'Деталі товару',
+  profileForm: 'Ваша анкета',
+  avatarSelect: 'Вибір аватара',
+  accountLook: 'Вибір обліку',
+  appearance: 'Оформлення',
+  changePassword: 'Змінити пароль',
+};
+
+export const PLACEHOLDER_TAB_IDS = Object.keys(PLACEHOLDER_TABS);

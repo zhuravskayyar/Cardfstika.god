@@ -1,0 +1,304 @@
+.card-slot {
+  position: relative;
+  width: var(--card-w, 126px);
+  height: var(--card-h, calc(var(--card-w, 126px) * 1.5));
+  isolation: isolate;
+
+  padding: 0;
+  display: block;
+
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+}
+
+/* =========================================================
+   BUTTON STATE
+   ========================================================= */
+
+button.card-slot {
+  cursor: pointer;
+  transition:
+    filter 0.15s ease,
+    transform 0.12s ease;
+}
+
+button.card-slot:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+/* =========================================================
+   FRAME
+   Рамка завжди поверх арту, але під цифрою і бейджем.
+   ========================================================= */
+
+.card-slot__frame {
+  position: absolute;
+  inset: 0;
+
+  z-index: 20;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: fill;
+  pointer-events: none;
+
+  opacity: 1;
+
+  filter:
+    contrast(1.08)
+    drop-shadow(0 3px 3px rgba(0, 0, 0, 0.68));
+}
+
+/* =========================================================
+   ART AREA
+   Зона арту всередині рамки.
+   Базові координати для 1024x1536:
+   x: 126
+   y: 318
+   w: 760
+   h: 900
+   ========================================================= */
+
+.card-slot__art {
+  position: absolute;
+
+  /*
+    ART FULL INNER WINDOW
+    Арт має заходити під рамку, щоб не було пустого місця знизу.
+  */
+  left: 12.3047%;
+  top: 17.2%;
+  width: 74.2188%;
+  height: 70.8%;
+
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  border-radius: calc(var(--card-w, 126px) * 0.0476);
+
+  background:
+    radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.12), transparent 35%),
+    linear-gradient(180deg, rgba(42, 31, 20, 0.98), rgba(6, 6, 5, 0.98));
+
+  box-shadow:
+    inset 0 0 0 1px rgba(213, 166, 82, 0.22),
+    inset 0 12px 22px rgba(0, 0, 0, 0.55);
+}
+
+.card-slot__art-img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center center;
+
+  display: block;
+
+  filter:
+    drop-shadow(0 5px 5px rgba(0, 0, 0, 0.8))
+    drop-shadow(0 0 8px rgba(255, 230, 150, 0.18));
+}
+
+/* =========================================================
+   POWER NUMBER
+   ЦИФРА СИЛИ СТАВИТЬСЯ ТІЛЬКИ У ВЕРХНІЙ ЦЕНТРАЛЬНИЙ ПАЗ.
+
+   Базові координати для 1024x1536:
+   x: 310
+   y: 105
+   w: 540
+   h: 105
+
+   УВАГА:
+   Не переносити це число в круглий бейдж справа знизу.
+   ========================================================= */
+
+.card-slot__power {
+  position: absolute;
+
+  left: 30.2734%;
+  top: 6.8359%;
+  width: 52.7344%;
+  height: 13.8359%;
+
+  z-index: 30;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  overflow: hidden;
+
+  pointer-events: none;
+
+  color: #d6b35f;
+  font-family: var(--font-title);
+  font-size: calc(var(--card-w, 126px) * 0.1406);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: calc(var(--card-w, 126px) * 0.002);
+
+  text-shadow:
+    0 calc(var(--card-w, 126px) * 0.003) 0 #1a0d03,
+    0 0 calc(var(--card-w, 126px) * 0.011) rgba(255, 210, 100, 0.75),
+    0 0 calc(var(--card-w, 126px) * 0.024) rgba(255, 140, 30, 0.45);
+}
+
+.card-slot__power span {
+  display: block;
+
+  max-width: 100%;
+
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transform: translateY(0);
+}
+
+/* Розміри для довгих значень сили */
+
+.card-slot__power span[data-digits="1"],
+.card-slot__power span[data-digits="2"] {
+  font-size: calc(var(--card-w, 126px) * 0.1406);
+}
+
+.card-slot__power span[data-digits="3"] {
+  font-size: calc(var(--card-w, 126px) * 0.125);
+}
+
+.card-slot__power span[data-digits="4"] {
+  font-size: calc(var(--card-w, 126px) * 0.105);
+}
+
+.card-slot__power span[data-digits="5"] {
+  font-size: calc(var(--card-w, 126px) * 0.09);
+}
+
+/* =========================================================
+   ELEMENT BADGE
+   БЕЙДЖ СТИХІЇ СТАВИТЬСЯ ТІЛЬКИ У ПРАВИЙ НИЖНІЙ КРУГЛИЙ ПАЗ.
+
+   Базові координати для 1024x1536:
+   x: 747
+   y: 1158
+   w: 190
+   h: 190
+
+   УВАГА:
+   Тут тільки іконка стихії: fire / water / earth / air.
+   Не ставити сюди цифру сили.
+   ========================================================= */
+
+.card-slot__element {
+  position: absolute;
+
+  left: 70.9492%;
+  top: 77.3906%;
+  width: 22.5547%;
+  height: 15.3698%;
+
+  z-index: 25;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.card-slot__element-icon {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0
+      calc(var(--card-w, 126px) * 0.006)
+      calc(var(--card-w, 126px) * 0.006)
+      rgba(0, 0, 0, 0.86)
+    )
+    drop-shadow(
+      0
+      0
+      calc(var(--card-w, 126px) * 0.014)
+      rgba(255, 230, 130, 0.32)
+    );
+}
+
+/* =========================================================
+   SELECTED STATE
+   ========================================================= */
+
+.card-slot--selected .card-slot__frame,
+button.card-slot:focus-visible .card-slot__frame {
+  filter:
+    contrast(1.14)
+    drop-shadow(0 0 5px rgba(122, 255, 107, 0.95))
+    drop-shadow(0 3px 3px rgba(0, 0, 0, 0.72));
+}
+
+/* =========================================================
+   ELEMENT BACKGROUNDS FOR ART AREA
+   ========================================================= */
+
+.card-slot--earth .card-slot__art {
+  background:
+    radial-gradient(circle at 45% 28%, rgba(96, 158, 74, 0.46), transparent 42%),
+    linear-gradient(180deg, rgba(62, 52, 25, 0.98), rgba(8, 12, 6, 0.98));
+}
+
+.card-slot--water .card-slot__art {
+  background:
+    radial-gradient(circle at 52% 28%, rgba(89, 193, 226, 0.48), transparent 42%),
+    linear-gradient(180deg, rgba(19, 62, 81, 0.98), rgba(5, 10, 18, 0.98));
+}
+
+.card-slot--air .card-slot__art {
+  background:
+    radial-gradient(circle at 50% 25%, rgba(183, 229, 255, 0.46), transparent 42%),
+    linear-gradient(180deg, rgba(60, 72, 86, 0.98), rgba(9, 11, 18, 0.98));
+}
+
+.card-slot--fire .card-slot__art {
+  background:
+    radial-gradient(circle at 49% 28%, rgba(255, 116, 47, 0.5), transparent 42%),
+    linear-gradient(180deg, rgba(92, 29, 13, 0.98), rgba(13, 6, 5, 0.98));
+}
+
+/* =========================================================
+   EMPTY CARD
+   ========================================================= */
+
+.card-slot--empty .card-slot__art {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(58, 47, 31, 0.32), transparent 48%),
+    linear-gradient(180deg, rgba(15, 13, 10, 0.92), rgba(4, 4, 4, 0.98));
+
+  opacity: 0.82;
+}
+
+/*
+.card-slot__power
+= цифра сили
+= верхній центральний паз
+= x 310 / y 105 / w 540 / h 105 на базі 1024x1536
+
+.card-slot__element
+= бейдж стихії
+= правий нижній круглий паз
+= x 747 / y 1158 / w 190 / h 190 на базі 1024x1536
+*/
