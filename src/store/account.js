@@ -145,6 +145,9 @@ export function createDefaultAccount() {
       rarity: 'common',
       power: STARTER_CARD_POWER,
       copies: 0,
+      upgradeProgressElements: 0,
+      absorbedElements: 0,
+      protected: false,
       isNew: false,
     })),
     purchaseCounts: {},
@@ -237,7 +240,19 @@ export function normalizeAccount(rawAccount) {
         ...(account.profile?.avatar && typeof account.profile.avatar === 'object' ? account.profile.avatar : {}),
       },
     },
-    ownedCards: Array.isArray(account.ownedCards) ? account.ownedCards : [],
+    ownedCards: Array.isArray(account.ownedCards)
+      ? account.ownedCards
+        .filter((card) => card?.cardId)
+        .map((card) => ({
+          ...card,
+          level: Math.max(1, Number(card.level) || 1),
+          power: Number(card.power) || 0,
+          copies: Number(card.copies) || 0,
+          upgradeProgressElements: Number(card.upgradeProgressElements) || 0,
+          absorbedElements: Number(card.absorbedElements) || 0,
+          protected: Boolean(card.protected),
+        }))
+      : [],
     purchaseCounts: account.purchaseCounts && typeof account.purchaseCounts === 'object' ? account.purchaseCounts : {},
     shopCardChances: {
       ...clone(DEFAULT_SHOP_CARD_CHANCES),

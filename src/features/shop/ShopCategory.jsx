@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGame } from '../../store/GameContext.jsx';
 import CardPackItem from './CardPackItem.jsx';
 import BonusItem from './BonusItem.jsx';
 import ShopDetails from './ShopDetails.jsx';
 import RowButton from '../../components/ui/RowButton.jsx';
 import { CARD_PACKS, BOOSTERS } from './shopConfig.js';
-import { buyShopItem } from './shopLogic.js';
+import { buyShopItem, getPackChances, getPaymentPlan } from './shopLogic.js';
+import { buildBattleDeckCards } from '../../engine/deckModel.js';
 import banner1 from '../../assets/shop/cardsshop/banner_1.png';
 import banner2 from '../../assets/shop/cardsshop/banner_2.png';
 import banner3 from '../../assets/shop/cardsshop/banner_3.png';
@@ -88,15 +89,21 @@ const SECTIONS = {
 export default function ShopCategory({ sectionId, onBack, onNavigate, onPurchased }) {
   const { state, dispatch } = useGame();
   const [detailItemId, setDetailItemId] = useState(null);
+  const latestStateRef = useRef(state);
+
+  useEffect(() => {
+    latestStateRef.current = state;
+  }, [state]);
 
   function handleBuy(item, options = {}) {
+    const currentState = latestStateRef.current;
     const result = buyShopItem(item, {
-      player:          state.player,
-      ownedCards:      state.ownedCards ?? [],
-      purchaseCounts:  state.purchaseCounts ?? {},
-      shopCardChances: state.shopCardChances ?? {},
-      ownedCosmetics:  state.ownedCosmetics ?? [],
-      boosters:        state.boosters ?? {},
+      player:          currentState.player,
+      ownedCards:      currentState.ownedCards ?? [],
+      purchaseCounts:  currentState.purchaseCounts ?? {},
+      shopCardChances: currentState.shopCardChances ?? {},
+      ownedCosmetics:  currentState.ownedCosmetics ?? [],
+      boosters:        currentState.boosters ?? {},
       selectedCurrency: options.selectedCurrency,
       confirmedTopUp:  options.confirmedTopUp,
     });
@@ -108,7 +115,27 @@ export default function ShopCategory({ sectionId, onBack, onNavigate, onPurchase
     }
 
     dispatch({ type: 'SHOP_PURCHASE', payload: result.nextState });
-    onPurchased?.({ ok: true, item, rewards: result.rewards });
+    const paymentPlan = getPaymentPlan(item, currentState.player ?? {}, options.selectedCurrency);
+    const nextGameState = {
+      ...currentState,
+      ...result.nextState,
+      cards: currentState.cards,
+    };
+    const battleIds = new Set(buildBattleDeckCards(nextGameState).map((card) => card.id));
+    const rewards = result.rewards.map((reward) => ({
+      ...reward,
+      inBattleDeck: reward.cardId ? battleIds.has(reward.cardId) : false,
+    }));
+    onPurchased?.({
+      ok: true,
+      item,
+      rewards,
+      paymentPlan,
+      nextChances: item.type === 'shop-card-pack'
+        ? getPackChances(item, result.nextState.shopCardChances ?? {})
+        : null,
+      buyAgain: () => handleBuy(item, options),
+    });
   }
 
   const Section = SECTIONS[sectionId];

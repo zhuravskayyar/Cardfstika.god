@@ -42,6 +42,7 @@ export default function App() {
         <PlaceholderScreen title={title} />,
       ]),
     ),
+    weakCards: <DeckScreen />,
   };
 
   if (!state.isAuthenticated) {

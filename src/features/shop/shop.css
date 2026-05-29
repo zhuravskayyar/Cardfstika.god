@@ -1288,6 +1288,263 @@
   cursor: pointer;
 }
 
+.purchase-card-result {
+  width: min(425px, 100vw);
+  min-height: min(620px, calc(100dvh - 18px));
+  padding: 8px var(--row-menu-inset-right, 10px) 0 var(--row-menu-inset-left, 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-main-parchment);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(120, 24, 150, 0.24), transparent 28%),
+    linear-gradient(to bottom, rgba(3, 8, 8, 0.96), rgba(0, 0, 0, 0.98));
+  border-top: 2px solid rgba(72, 214, 236, 0.82);
+  border-right: 1px solid rgba(72, 214, 236, 0.42);
+  border-left: 1px solid rgba(72, 214, 236, 0.42);
+  box-shadow:
+    inset 0 0 18px rgba(0, 0, 0, 0.86),
+    0 8px 28px rgba(0, 0, 0, 0.86);
+  text-shadow: 0 1px 2px #000;
+}
+
+.purchase-card-result__notice {
+  width: 100%;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3px;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.05;
+  text-align: center;
+  border: 1px solid rgba(25, 188, 230, 0.9);
+  background: rgba(2, 20, 34, 0.92);
+  box-shadow:
+    inset 0 0 10px rgba(0, 0, 0, 0.78),
+    0 0 8px rgba(0, 190, 230, 0.24);
+}
+
+.purchase-card-result__notice strong {
+  color: #fff84f;
+  font-family: var(--font-title);
+  font-size: 13px;
+}
+
+.purchase-card-result__link {
+  color: var(--text-help-jade);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.purchase-card-result__luck {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 9px;
+  display: grid;
+  place-items: center;
+  padding: 4px 10px 6px;
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.12;
+  text-align: center;
+  border: 1px solid rgba(255, 75, 255, 0.88);
+  background: rgba(80, 0, 82, 0.95);
+  box-shadow:
+    inset 0 0 12px rgba(0, 0, 0, 0.72),
+    0 0 8px rgba(230, 0, 255, 0.36);
+}
+
+.purchase-card-result__showcase {
+  --card-w: clamp(78px, 22vw, 98px);
+  --card-h: calc(var(--card-w) * 1.5);
+  position: relative;
+  width: 100%;
+  min-height: 138px;
+  display: grid;
+  place-items: center;
+}
+
+.purchase-card-result__glow {
+  position: absolute;
+  width: min(250px, 74%);
+  height: 120px;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75) 0 7%, rgba(190, 68, 255, 0.58) 18%, rgba(80, 18, 160, 0.24) 40%, transparent 68%),
+    repeating-conic-gradient(from 0deg, rgba(170, 54, 255, 0.5) 0deg 7deg, transparent 7deg 15deg);
+  filter: blur(1px);
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.purchase-card-result__glow--rare {
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.72) 0 7%, rgba(52, 177, 255, 0.54) 18%, rgba(20, 90, 160, 0.24) 40%, transparent 68%),
+    repeating-conic-gradient(from 0deg, rgba(52, 177, 255, 0.45) 0deg 7deg, transparent 7deg 15deg);
+}
+
+.purchase-card-result__glow--legendary,
+.purchase-card-result__glow--mythic {
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.78) 0 7%, rgba(255, 185, 48, 0.56) 18%, rgba(170, 42, 20, 0.28) 40%, transparent 68%),
+    repeating-conic-gradient(from 0deg, rgba(255, 185, 48, 0.48) 0deg 7deg, transparent 7deg 15deg);
+}
+
+.purchase-card-result__card {
+  position: relative;
+  z-index: 1;
+  width: var(--card-w);
+  height: var(--card-h);
+}
+
+.purchase-card-result__buy-again {
+  min-width: 132px;
+  height: 38px;
+  margin-top: -2px;
+  padding: 0 18px;
+  color: #c8f6ff;
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  background:
+    linear-gradient(to bottom, rgba(46, 128, 144, 0.96), rgba(7, 43, 56, 0.98));
+  border: 2px solid rgba(129, 214, 224, 0.76);
+  border-radius: 5px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -7px 13px rgba(0, 0, 0, 0.62),
+    0 2px 8px rgba(0, 0, 0, 0.72);
+  text-shadow: 0 1px 2px #000;
+  cursor: pointer;
+}
+
+.purchase-card-result__price {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--text-muted-gold);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.purchase-card-result__price img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.purchase-card-result__price strong {
+  color: var(--text-main-parchment);
+  font-family: var(--font-title);
+}
+
+.purchase-card-result__chances {
+  margin-top: 8px;
+  color: var(--text-main-parchment);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.purchase-card-result__chance-row {
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.purchase-card-result__chance {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.purchase-card-result__chance span {
+  width: 15px;
+  height: 15px;
+  display: inline-grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.purchase-card-result__chance--rare span { background: #1679b8; }
+.purchase-card-result__chance--epic span { background: #b52de4; }
+.purchase-card-result__chance--legendary span { background: #d98a20; }
+.purchase-card-result__chance--mythic span { background: #ce1830; }
+
+.purchase-card-result__chance--rare strong { color: #7fd7ff; }
+.purchase-card-result__chance--epic strong { color: #f04fff; }
+.purchase-card-result__chance--legendary strong,
+.purchase-card-result__chance--mythic strong { color: var(--text-title-gold); }
+
+.purchase-card-result__divider {
+  width: 100%;
+  height: 13px;
+  margin-top: 12px;
+  border-top: 1px solid rgba(118, 177, 189, 0.56);
+  background:
+    linear-gradient(90deg, rgba(76, 140, 160, 0.45), transparent 12% 88%, rgba(76, 140, 160, 0.45));
+}
+
+.purchase-card-result__deck-note {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text-main-parchment);
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: center;
+}
+
+.purchase-card-result__deck-note span {
+  width: 16px;
+  height: 16px;
+  display: inline-grid;
+  place-items: center;
+  color: #001019;
+  background: #bdeeff;
+  border-radius: 3px;
+  font-size: 11px;
+  box-shadow: 0 1px 2px #000;
+}
+
+.purchase-card-result__actions {
+  width: 100%;
+  margin-top: auto;
+  padding: 6px var(--row-menu-inset-right, 0) 0 var(--row-menu-inset-left, 0);
+}
+
+.purchase-card-result__actions .row-button {
+  flex: 0 0 auto;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 12px 0 9px;
+  width: 100%;
+  background-size: 100% 122%;
+  font-size: clamp(15px, 4vw, 19px);
+}
+
 .shop-detail__buy {
   width: min(206px, 92%);
   height: 40px;
