@@ -177,3 +177,16 @@
   width: 100% !important;
   max-width: 420px !important;
 }
+
+/* Make deck screen behave like home/main menu: center content both axes
+   and ensure the inner panel is constrained and horizontally centered. */
+.deck-screen {
+  justify-content: center !important;
+}
+
+.deck-screen .deck-panel {
+  max-width: 430px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
