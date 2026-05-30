@@ -3,6 +3,11 @@
   width: var(--card-w, 126px);
   height: var(--card-h, calc(var(--card-w, 126px) * 1.5));
   isolation: isolate;
+  --rarity-glow: rgba(235, 238, 232, 0.2);
+  --rarity-core: rgba(255, 255, 255, 0.28);
+  --rarity-pulse-speed: 4.8s;
+  --rarity-aura-opacity: 0.48;
+  --rarity-aura-scale: 1.035;
 
   padding: 0;
   display: block;
@@ -11,6 +16,119 @@
   border: 0;
   color: inherit;
   font: inherit;
+}
+
+.card-slot--rarity-common {
+  --rarity-glow: rgba(224, 230, 220, 0.18);
+  --rarity-core: rgba(255, 255, 255, 0.24);
+  --rarity-aura-opacity: 0.26;
+  --rarity-aura-scale: 1.018;
+}
+
+.card-slot--rarity-uncommon {
+  --rarity-glow: rgba(75, 255, 92, 0.32);
+  --rarity-core: rgba(152, 255, 94, 0.38);
+  --rarity-aura-opacity: 0.42;
+}
+
+.card-slot--rarity-rare {
+  --rarity-glow: rgba(31, 217, 255, 0.34);
+  --rarity-core: rgba(111, 245, 255, 0.42);
+  --rarity-aura-opacity: 0.48;
+}
+
+.card-slot--rarity-epic {
+  --rarity-glow: rgba(218, 76, 255, 0.36);
+  --rarity-core: rgba(247, 107, 255, 0.43);
+  --rarity-aura-opacity: 0.52;
+  --rarity-pulse-speed: 4.3s;
+}
+
+.card-slot--rarity-legendary {
+  --rarity-glow: rgba(255, 172, 47, 0.42);
+  --rarity-core: rgba(255, 218, 102, 0.48);
+  --rarity-aura-opacity: 0.58;
+  --rarity-aura-scale: 1.045;
+  --rarity-pulse-speed: 3.9s;
+}
+
+.card-slot--rarity-mythic {
+  --rarity-glow: rgba(255, 34, 48, 0.46);
+  --rarity-core: rgba(255, 96, 44, 0.5);
+  --rarity-aura-opacity: 0.62;
+  --rarity-aura-scale: 1.05;
+  --rarity-pulse-speed: 3.7s;
+}
+
+.card-slot::before {
+  content: '';
+  position: absolute;
+  inset: -4%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--rarity-aura-opacity);
+  transform: scale(1);
+  border-radius: calc(var(--card-w, 126px) * 0.08);
+  background:
+    radial-gradient(ellipse at 50% 44%, var(--rarity-core) 0 8%, var(--rarity-glow) 32%, transparent 72%);
+  filter: blur(calc(var(--card-w, 126px) * 0.028));
+  will-change: transform, opacity;
+  animation: card-rarity-aura var(--rarity-pulse-speed) ease-in-out infinite;
+}
+
+.card-slot::after {
+  content: '';
+  position: absolute;
+  left: 12.3047%;
+  top: 17.2%;
+  width: 74.2188%;
+  height: 70.8%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: calc(var(--card-w, 126px) * 0.0476);
+  background:
+    linear-gradient(105deg, transparent 0 34%, rgba(255, 255, 220, 0.34) 46%, transparent 58% 100%);
+  transform: translateX(-62%);
+  will-change: transform, opacity;
+}
+
+.card-slot--rarity-legendary::after,
+.card-slot--rarity-mythic::after {
+  opacity: 0.44;
+  animation: card-rarity-shimmer 4.8s ease-in-out infinite;
+}
+
+.card-slot--minimal::before,
+.card-slot--minimal::after,
+.card-slot--empty::before,
+.card-slot--empty::after {
+  display: none;
+}
+
+@keyframes card-rarity-aura {
+  0%, 100% {
+    opacity: calc(var(--rarity-aura-opacity) * 0.72);
+    transform: scale(1);
+  }
+  50% {
+    opacity: var(--rarity-aura-opacity);
+    transform: scale(var(--rarity-aura-scale));
+  }
+}
+
+@keyframes card-rarity-shimmer {
+  0%, 62%, 100% {
+    opacity: 0;
+    transform: translateX(-62%);
+  }
+  74% {
+    opacity: 0.42;
+  }
+  88% {
+    opacity: 0;
+    transform: translateX(62%);
+  }
 }
 
 /* =========================================================
@@ -289,6 +407,23 @@ button.card-slot:focus-visible .card-slot__frame {
     linear-gradient(180deg, rgba(15, 13, 10, 0.92), rgba(4, 4, 4, 0.98));
 
   opacity: 0.82;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-slot::before,
+  .card-slot::after {
+    animation: none;
+    will-change: auto;
+  }
+
+  .card-slot::before {
+    opacity: calc(var(--rarity-aura-opacity) * 0.72);
+    transform: none;
+  }
+
+  .card-slot::after {
+    opacity: 0;
+  }
 }
 
 /*

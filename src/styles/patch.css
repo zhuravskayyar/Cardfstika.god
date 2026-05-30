@@ -159,3 +159,21 @@
   min-height: 100%;
   padding: 4px var(--row-menu-inset-right) 8px var(--row-menu-inset-left) !important;
 }
+
+/* =========================================================
+   Center all top-level screen containers
+   Applies to elements with class names ending in "-screen" and generic .screen
+   Minimal, non-invasive: centers horizontally and stacks children vertically
+========================================================= */
+[class$="-screen"], .screen {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important; /* center content horizontally */
+  justify-content: flex-start !important;
+}
+
+/* Ensure immediate panels inside screens don't expand full width unexpectedly */
+[class$="-screen"] > * , .screen > * {
+  width: 100% !important;
+  max-width: 420px !important;
+}

@@ -4,6 +4,7 @@
    ShopScreen Wrapper - Background container
 ════════════════════════════════════════════════════════ */
 .shop-screen-wrapper {
+  --shop-green-button-image: url("../../assets/bt/bt_green.png");
   position: relative;
   display: flex;
   flex-direction: column;
@@ -80,6 +81,7 @@
 /* Базовий банер */
 .shop-banner {
   position: relative;
+  --shop-banner-delay: 0s;
   width: 100%;
   height: 96px;
   padding: 0;
@@ -93,17 +95,26 @@
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(1.08) saturate(1.15);
-  transition: filter 0.12s;
+  transition: filter 0.12s, transform 0.1s;
+  animation: shop-banner-breathe 6.4s ease-in-out var(--shop-banner-delay) infinite;
+  will-change: transform, filter;
 }
 
 .shop-banner:active {
   filter: brightness(0.82) saturate(1);
+  transform: translateY(1px) scale(0.985);
+  animation-play-state: paused;
 }
+
+.shop-banner:nth-child(2) { --shop-banner-delay: 0.45s; }
+.shop-banner:nth-child(3) { --shop-banner-delay: 0.9s; }
+.shop-banner:nth-child(4) { --shop-banner-delay: 1.35s; }
 
 /* Тіньовий оверлей з текстом */
 .shop-banner__overlay {
   position: absolute;
   inset: 0;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -150,25 +161,23 @@
   top: 0;
   bottom: 0;
   width: 5px;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Верхній shimmer */
 .shop-banner::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 230, 130, 0.55) 35%,
-    rgba(255, 255, 200, 0.75) 50%,
-    rgba(255, 230, 130, 0.55) 65%,
-    transparent 100%
-  );
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.32;
+  background:
+    linear-gradient(100deg, transparent 0 34%, rgba(255, 240, 170, 0.24) 45%, transparent 58% 100%),
+    linear-gradient(90deg, transparent 0%, rgba(255, 230, 130, 0.34) 35%, rgba(255, 255, 200, 0.5) 50%, rgba(255, 230, 130, 0.34) 65%, transparent 100%);
+  transform: translateX(-54%);
+  animation: shop-banner-shimmer 5.8s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 /* Рядки-кнопки під банерами (бойова колода / завдання / купити золото) */
@@ -351,7 +360,7 @@
 }
 
 .shop-pack-item__buy-wrap .shop-pack-item__buy {
-  position: static;
+  position: relative;
   width: 100%;
   height: 100%;
 }
@@ -538,12 +547,12 @@
   left: 50%;
   bottom: -12px;
   transform: translateX(-50%);
-  width: 176px;
-  height: 38px;
+  width: 190px;
+  height: 42px;
   border: none;
-  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
   font-family: var(--font-title);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
   color: #fff7b2;
   text-shadow:
@@ -575,12 +584,12 @@
   left: 50%;
   bottom: -12px;
   transform: translateX(-50%);
-  width: 176px;
-  height: 38px;
+  width: 190px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
   color: #e9ffcf;
   font-family: var(--font-title);
   font-size: 13px;
@@ -749,21 +758,18 @@
 
 .purchase-result__ok-btn {
   align-self: center;
-  min-width: 120px;
-  height: 38px;
-  padding: 0 20px;
-  border: 2px solid #8ee35a;
-  border-radius: var(--radius-sm);
-  background:
-    linear-gradient(#2c8b17, #0d3e08 52%, #082904),
-    radial-gradient(circle at 50% 0%, rgba(255,255,255,.28), transparent 60%);
-  box-shadow:
-    inset 0 0 8px rgba(170,255,100,.55),
-    0 2px 0 #021400;
-  color: #f4ffe8;
+  min-width: 160px;
+  height: 40px;
+  padding: 0 24px 2px;
+  border: 0;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
+  color: #fff7bd;
   font-family: var(--font-title);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 900;
+  text-shadow:
+    0 1px 0 #162400,
+    0 0 5px rgba(0, 0, 0, 0.95);
   cursor: pointer;
   transition: filter 0.1s, transform 0.08s;
 }
@@ -1013,15 +1019,31 @@
   text-shadow: 0 1px 1px #000, 0 0 4px rgba(0, 0, 0, 0.9);
   cursor: pointer;
   white-space: nowrap;
+  overflow: hidden;
   transition: filter 0.1s, transform 0.08s;
 }
 
+.shop-pack-item__buy::after,
+.shop-detail__buy::after,
+.purchase-card-result__buy-again::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(100deg, transparent 0 32%, rgba(255, 255, 220, 0.32) 48%, transparent 64% 100%);
+  transform: translateX(-64%);
+  animation: shop-button-shine 4.8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 .shop-items-list--packs .shop-pack-item__buy-wrap {
-  left: 50%;
-  top: 82px;
-  width: 206px;
-  height: 40px;
-  transform: translateX(-50%);
+  left: auto;
+  right: 12px;
+  top: 84px;
+  width: min(190px, 46%);
+  height: 38px;
+  transform: none;
 }
 
 .shop-items-list--packs .shop-pack-item__buy {
@@ -1029,8 +1051,8 @@
   height: 100%;
   gap: 5px;
   color: #fff7bd;
-  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
-  font-size: 17px;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
+  font-size: 16px;
   line-height: 1;
   font-weight: 900;
   text-shadow:
@@ -1370,34 +1392,6 @@
   place-items: center;
 }
 
-.purchase-card-result__glow {
-  position: absolute;
-  width: min(250px, 74%);
-  height: 120px;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  background:
-    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75) 0 7%, rgba(190, 68, 255, 0.58) 18%, rgba(80, 18, 160, 0.24) 40%, transparent 68%),
-    repeating-conic-gradient(from 0deg, rgba(170, 54, 255, 0.5) 0deg 7deg, transparent 7deg 15deg);
-  filter: blur(1px);
-  opacity: 0.88;
-  pointer-events: none;
-}
-
-.purchase-card-result__glow--rare {
-  background:
-    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.72) 0 7%, rgba(52, 177, 255, 0.54) 18%, rgba(20, 90, 160, 0.24) 40%, transparent 68%),
-    repeating-conic-gradient(from 0deg, rgba(52, 177, 255, 0.45) 0deg 7deg, transparent 7deg 15deg);
-}
-
-.purchase-card-result__glow--legendary,
-.purchase-card-result__glow--mythic {
-  background:
-    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.78) 0 7%, rgba(255, 185, 48, 0.56) 18%, rgba(170, 42, 20, 0.28) 40%, transparent 68%),
-    repeating-conic-gradient(from 0deg, rgba(255, 185, 48, 0.48) 0deg 7deg, transparent 7deg 15deg);
-}
-
 .purchase-card-result__card {
   position: relative;
   z-index: 1;
@@ -1405,25 +1399,28 @@
   height: var(--card-h);
 }
 
+.purchase-card-result__card .card-slot {
+  --rarity-aura-opacity: 0.76;
+  --rarity-aura-scale: 1.07;
+}
+
 .purchase-card-result__buy-again {
-  min-width: 132px;
-  height: 38px;
+  position: relative;
+  overflow: hidden;
+  min-width: 170px;
+  height: 40px;
   margin-top: -2px;
-  padding: 0 18px;
-  color: #c8f6ff;
+  padding: 0 24px 2px;
+  color: #fff7bd;
   font-family: var(--font-title);
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 900;
   line-height: 1;
-  background:
-    linear-gradient(to bottom, rgba(46, 128, 144, 0.96), rgba(7, 43, 56, 0.98));
-  border: 2px solid rgba(129, 214, 224, 0.76);
-  border-radius: 5px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -7px 13px rgba(0, 0, 0, 0.62),
-    0 2px 8px rgba(0, 0, 0, 0.72);
-  text-shadow: 0 1px 2px #000;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
+  border: 0;
+  text-shadow:
+    0 1px 0 #162400,
+    0 0 5px rgba(0, 0, 0, 0.95);
   cursor: pointer;
 }
 
@@ -1546,21 +1543,23 @@
 }
 
 .shop-detail__buy {
-  width: min(206px, 92%);
-  height: 40px;
-  min-height: 40px;
-  padding: 0 12px;
+  position: relative;
+  width: min(220px, 92%);
+  height: 44px;
+  min-height: 44px;
+  padding: 0 18px 2px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   color: #fff7bd;
   font-family: var(--font-title);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
   line-height: 1;
   border: none;
-  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
+  overflow: hidden;
   text-shadow:
     0 1px 0 #162400,
     0 0 5px rgba(0, 0, 0, 0.95);
@@ -1838,8 +1837,8 @@
   position: absolute;
   left: 123px;
   top: 58px;
-  width: 158px;
-  height: 28px;
+  width: 172px;
+  height: 34px;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -1847,7 +1846,7 @@
   gap: 3px;
   border: none;
   padding: 0;
-  background: transparent;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
   font-family: var(--font-title);
   font-size: 12px;
   line-height: 16px;
@@ -1960,7 +1959,7 @@
   font-size: 12px;
   letter-spacing: 0;
   z-index: 10;
-  background: transparent;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
   text-shadow:
     0 1px 0 #172400,
     0 0 5px rgba(0, 0, 0, 0.95);
@@ -2089,8 +2088,8 @@
   position: absolute;
   left: 123px;
   top: 58px;
-  width: 158px;
-  height: 28px;
+  width: 172px;
+  height: 34px;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -2098,7 +2097,7 @@
   gap: 3px;
   border: none;
   padding: 0;
-  background: transparent;
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat;
   font-family: var(--font-title);
   font-size: 12px;
   line-height: 16px;
@@ -2157,6 +2156,67 @@ body,
   content: none !important;
 }
 
+@keyframes shop-banner-breathe {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1.08) saturate(1.15);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.006);
+    filter: brightness(1.13) saturate(1.18);
+  }
+}
+
+@keyframes shop-banner-shimmer {
+  0%, 58%, 100% {
+    opacity: 0;
+    transform: translateX(-54%);
+  }
+  70% {
+    opacity: 0.36;
+  }
+  86% {
+    opacity: 0;
+    transform: translateX(54%);
+  }
+}
+
+@keyframes shop-button-shine {
+  0%, 64%, 100% {
+    opacity: 0;
+    transform: translateX(-64%);
+  }
+  74% {
+    opacity: 0.5;
+  }
+  88% {
+    opacity: 0;
+    transform: translateX(64%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-banner,
+  .shop-banner::after,
+  .shop-pack-item__buy::after,
+  .shop-detail__buy::after,
+  .purchase-card-result__buy-again::after {
+    animation: none;
+    will-change: auto;
+  }
+
+  .shop-banner {
+    transform: none;
+  }
+
+  .shop-banner::after,
+  .shop-pack-item__buy::after,
+  .shop-detail__buy::after,
+  .purchase-card-result__buy-again::after {
+    opacity: 0;
+  }
+}
+
 .shop-bottom-links {
   display: flex;
   flex-direction: column;
@@ -2190,3 +2250,343 @@ body,
   flex: 0 0 96px;
   z-index: 1;
 }
+
+/* === FIX: pack cards layout like original reference === */
+
+/* Список паків */
+.shop-items-list.shop-items-list--packs {
+  padding: 6px 4px 18px !important;
+  gap: 0 !important;
+  align-items: stretch !important;
+}
+
+/* Одна плашка */
+.shop-items-list--packs .shop-pack-item {
+  position: relative !important;
+
+  width: 100% !important;
+  height: 132px !important;
+  min-height: 132px !important;
+
+  margin: 0 !important;
+
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  overflow: visible !important;
+}
+
+/* Іконка карти зліва */
+.shop-items-list--packs .shop-pack-item__art-zone {
+  left: 18px !important;
+  top: 24px !important;
+
+  width: 64px !important;
+  height: 72px !important;
+
+  overflow: hidden !important;
+  z-index: 5 !important;
+}
+
+.shop-items-list--packs .shop-pack-item__art-zone img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Текстовий блок */
+.shop-items-list--packs .shop-pack-item__text {
+  left: 92px !important;
+  top: 24px !important;
+
+  width: calc(100% - 112px) !important;
+  height: auto !important;
+
+  z-index: 6 !important;
+}
+
+/* Назва */
+.shop-items-list--packs .shop-pack-item__title {
+  width: 100% !important;
+  height: 24px !important;
+
+  font-size: 18px !important;
+  line-height: 22px !important;
+  font-weight: 900 !important;
+
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/* Рядок шансів */
+.shop-items-list--packs .shop-pack-item__desc {
+  margin-top: 4px !important;
+
+  width: 100% !important;
+  height: 20px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+
+  overflow: visible !important;
+}
+
+/* Відсоток */
+.shop-items-list--packs .shop-pack-item__chance {
+  min-width: 48px !important;
+  height: 19px !important;
+
+  padding: 0 6px !important;
+
+  font-size: 13px !important;
+  line-height: 19px !important;
+  font-weight: 900 !important;
+
+  border: none !important;
+}
+
+/* Текст "шанс мифической" */
+.shop-items-list--packs .shop-pack-item__chance-label {
+  max-width: none !important;
+
+  font-size: 13px !important;
+  line-height: 18px !important;
+  font-weight: 700 !important;
+
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+}
+
+/* Подробніше */
+.shop-items-list--packs .shop-pack-item__more {
+  margin-left: 0 !important;
+
+  font-size: 13px !important;
+  line-height: 18px !important;
+  font-weight: 700 !important;
+
+  color: var(--text-help-jade) !important;
+  white-space: nowrap !important;
+}
+
+/* Обгортка кнопки */
+.shop-items-list--packs .shop-pack-item__buy-wrap {
+  position: absolute !important;
+
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 10px !important;
+
+  transform: translateX(-50%) !important;
+
+  width: 198px !important;
+  height: 36px !important;
+
+  z-index: 20 !important;
+  overflow: visible !important;
+}
+
+/* Сама кнопка */
+.shop-items-list--packs .shop-pack-item__buy-wrap .shop-pack-item__buy {
+  position: relative !important;
+
+  left: 0 !important;
+  top: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  transform: none !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+
+  background: var(--shop-green-button-image) center / 100% 100% no-repeat !important;
+
+  font-size: 16px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+
+  color: #fff7bd !important;
+  white-space: nowrap !important;
+
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Срібна кнопка — синя */
+.shop-items-list--packs .shop-pack-item__buy-wrap .shop-pack-item__buy[data-currency="silver"] {
+  background-image: url("../../assets/bt/bt_blue.png") !important;
+  color: #e9f6ff !important;
+}
+
+/* Іконка валюти */
+.shop-items-list--packs .shop-pack-item__buy-icon {
+  width: 16px !important;
+  height: 16px !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+}
+
+/* Натискання без зсуву вправо */
+.shop-items-list--packs .shop-pack-item__buy-wrap .shop-pack-item__buy:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* === FIX: pack text layout like original === */
+
+/* Текстова зона правіше від арту */
+.shop-items-list--packs .shop-pack-item__text {
+  position: absolute !important;
+
+  left: 105px !important;
+  top: 25px !important;
+
+  width: calc(100% - 116px) !important;
+  height: 56px !important;
+
+  display: block !important;
+  z-index: 10 !important;
+
+  overflow: visible !important;
+}
+
+/* Назва карти */
+.shop-items-list--packs .shop-pack-item__title {
+  position: absolute !important;
+
+  left: 0 !important;
+  top: 0 !important;
+
+  width: 100% !important;
+  height: 24px !important;
+
+  font-family: var(--font-title) !important;
+  font-size: 18px !important;
+  line-height: 22px !important;
+  font-weight: 900 !important;
+
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+
+  text-shadow:
+    0 1px 0 #000,
+    0 0 4px #000,
+    0 0 6px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Рядок: % + шанс + подробніше */
+.shop-items-list--packs .shop-pack-item__desc {
+  position: absolute !important;
+
+  left: 0 !important;
+  top: 30px !important;
+
+  width: 100% !important;
+  height: 20px !important;
+
+  display: grid !important;
+  grid-template-columns: 50px max-content max-content !important;
+  align-items: center !important;
+  column-gap: 6px !important;
+
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+/* Червоний/фіолетовий блок % */
+.shop-items-list--packs .shop-pack-item__chance {
+  width: 50px !important;
+  min-width: 50px !important;
+  height: 18px !important;
+
+  padding: 0 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-family: var(--font-title) !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  font-weight: 900 !important;
+
+  color: #fff !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Текст "шанс міфічної / шанс епічної" */
+.shop-items-list--packs .shop-pack-item__chance-label {
+  display: inline-block !important;
+
+  max-width: none !important;
+
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  font-weight: 700 !important;
+
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+
+  text-shadow:
+    0 1px 0 #000,
+    0 0 4px #000 !important;
+}
+
+/* Кнопка "Подробніше" стоїть одразу після тексту */
+.shop-items-list--packs .shop-pack-item__more {
+  display: inline-flex !important;
+  align-items: center !important;
+
+  height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  font-weight: 700 !important;
+
+  color: var(--text-help-jade) !important;
+  text-decoration: underline !important;
+  white-space: nowrap !important;
+
+  background: none !important;
+  border: none !important;
+
+  text-shadow:
+    0 1px 0 #000,
+    0 0 4px #000 !important;
+}
+
+/* Іконка біля "Подробніше" */
+.shop-items-list--packs .shop-pack-item__more-icon {
+  margin-left: 3px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+}
+
+/* Якщо назва занадто велика — не даємо їй залазити на край */
+.shop-items-list--packs .shop-pack-item__title {
+  max-width: 285px !important;
+}
+
+/* Альтернативне тонке позиціонування (опціонально)
+   .shop-items-list--packs .shop-pack-item__text { left: 94px; top: 17px; }
+*/
+
+

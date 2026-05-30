@@ -17,6 +17,7 @@
 }
 
 .tile {
+  --tile-breathe-delay: 0s;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -27,12 +28,21 @@
   cursor: pointer;
   transition: filter 0.12s, transform 0.1s;
   user-select: none;
+  animation: tile-idle-breathe 5.6s ease-in-out var(--tile-breathe-delay) infinite;
+  will-change: transform;
 }
 
 .tile:active {
-  filter: brightness(0.62) saturate(0.78);
-  transform: scale(0.96);
+  animation-play-state: paused;
+  filter: brightness(0.72) saturate(0.88);
+  transform: translateY(1px) scale(0.94);
 }
+
+.tile:nth-child(2) { --tile-breathe-delay: 0.35s; }
+.tile:nth-child(3) { --tile-breathe-delay: 0.7s; }
+.tile:nth-child(4) { --tile-breathe-delay: 1.05s; }
+.tile:nth-child(5) { --tile-breathe-delay: 1.4s; }
+.tile:nth-child(6) { --tile-breathe-delay: 1.75s; }
 
 .tile__overlay {
   display: grid;
@@ -53,6 +63,13 @@
   transform-origin: center center;
   pointer-events: none;
   filter: drop-shadow(0 7px 6px rgba(0, 0, 0, 0.65));
+  transition: filter 0.16s ease;
+}
+
+.tile:hover .tile__img {
+  filter:
+    drop-shadow(0 7px 6px rgba(0, 0, 0, 0.65))
+    drop-shadow(0 0 6px rgba(214, 174, 82, 0.28));
 }
 
 .tile__icon {
@@ -117,4 +134,20 @@
 
 .tile--deck .tile__title {
   font-size: clamp(8px, 2.35vw, 10.5px);
+}
+
+@keyframes tile-idle-breathe {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.012);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    animation: none;
+    will-change: auto;
+  }
 }

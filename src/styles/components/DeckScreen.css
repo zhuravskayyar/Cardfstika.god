@@ -97,34 +97,73 @@
 .card-upgrade-arrow {
   position: absolute;
   z-index: 5;
-  top: -14px;
-  left: 50%;
-  width: 24px;
-  height: 24px;
-  transform: translateX(-50%);
+  bottom: -8px;
+  left: 8px;
+  width: 20px;
+  height: 22px;
   display: grid;
   place-items: center;
-  padding: 0 0 2px;
-  color: #081200;
-  font-family: var(--font-title);
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1;
-  border: 1px solid rgba(255, 244, 170, 0.7);
-  border-radius: 50%;
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.75),
-    inset 0 1px 0 rgba(255, 255, 255, 0.45);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.36);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.9));
   cursor: pointer;
 }
 
+.card-upgrade-arrow::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 6px;
+  height: 13px;
+  transform: translateX(-50%);
+  background: var(--upgrade-arrow-color, #95ff39);
+  border: 1px solid rgba(9, 41, 4, 0.75);
+  border-top: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 4px rgba(149, 255, 57, 0.45);
+}
+
+.card-upgrade-arrow::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-right: 9px solid transparent;
+  border-left: 9px solid transparent;
+  border-bottom: 11px solid var(--upgrade-arrow-color, #95ff39);
+}
+
+.card-upgrade-arrow span {
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  z-index: 1;
+  width: 5px;
+  height: 14px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(90deg, transparent 0 2px, rgba(255, 255, 200, 0.65) 2px 3px, transparent 3px 100%);
+  pointer-events: none;
+}
+
 .card-upgrade-arrow--free {
-  background: linear-gradient(to bottom, #b9ff56, #43d31f 60%, #15900b);
+  --upgrade-arrow-color: #95ff39;
 }
 
 .card-upgrade-arrow--gold {
-  background: linear-gradient(to bottom, #fff0a0, #f2c94c 58%, #b97912);
+  --upgrade-arrow-color: #f2c94c;
+}
+
+.card-upgrade-arrow--absorb {
+  --upgrade-arrow-color: #a9dd57;
 }
 
 .extra-title {
@@ -283,7 +322,7 @@
 
 .opened-card {
   --opened-info-min: 96px;
-  --card-w: 154px;
+  --card-w: 172px;
   --card-h: calc(var(--card-w) * 1.5);
 
   width: 100%;
@@ -295,12 +334,16 @@
   gap: 8px;
   align-items: center;
   overflow: hidden;
-  background: rgba(0, 23, 3, 0.85);
-  border: 2px solid #20d238;
-  border-radius: 7px;
+  /* Premium elemental panel: dark emerald with bronze contour */
+  background:
+    radial-gradient(circle at 20% 25%, rgba(35, 160, 70, 0.28), transparent 38%),
+    linear-gradient(180deg, rgba(12, 42, 24, 0.92), rgba(3, 14, 8, 0.96));
+  border: 1px solid rgba(190, 145, 54, 0.85);
+  border-radius: 8px;
   box-shadow:
-    inset 0 0 0 1px rgba(112, 255, 108, 0.18),
-    0 2px 7px rgba(0, 0, 0, 0.78);
+    inset 0 0 18px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(76, 255, 118, 0.18),
+    0 0 10px rgba(0, 255, 90, 0.22);
 }
 
 .opened-card__preview {
@@ -308,18 +351,33 @@
   justify-content: center;
   align-items: center;
   min-height: var(--card-h, min(28vw, 122px));
+  padding: 6px;
+  background:
+    radial-gradient(circle, rgba(255, 205, 80, 0.16), transparent 68%),
+    rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(190, 145, 54, 0.45);
+  box-shadow:
+    0 0 16px rgba(0, 0, 0, 0.9),
+    0 0 12px rgba(70, 255, 100, 0.18);
+  border-radius: 6px;
+}
+
+.opened-card__preview .card-slot {
+  --rarity-aura-opacity: 0.7;
+  --rarity-aura-scale: 1.06;
 }
 
 .opened-card__info {
   min-width: 0;
   padding-top: 2px;
   display: grid;
-  gap: 5px;
+  gap: 6px;
   color: var(--text-main-parchment);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.08;
   text-shadow: 0 1px 2px #000;
+  grid-template-rows: auto auto 1fr;
 }
 
 .opened-card__stat {
@@ -386,11 +444,48 @@
   text-shadow: 0 1px 2px #000;
 }
 
-.opened-card__separator {
-  height: 6px;
-  margin: 10px 0 8px;
-  border-top: 1px solid rgba(127, 207, 192, 0.62);
-  background: linear-gradient(90deg, var(--text-help-jade) 0 20%, rgba(234, 217, 166, 0.5) 20% 100%);
+/* Progress block separator */
+.opened-card__protection,
+.opened-card__line:first-of-type {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(190, 145, 54, 0.35);
+}
+
+/* Lore / description block */
+.opened-card__line--muted {
+  color: #b8f0d0;
+  text-decoration: none;
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(80, 210, 120, 0.28);
+  font-size: 12px;
+  line-height: 1.18;
+}
+
+.opened-card__progress {
+  width: min(384px, calc(100% - 8px));
+  height: 7px;
+  margin: 10px auto 8px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom, rgba(10, 8, 4, 0.96), rgba(57, 47, 25, 0.98));
+  border: 1px solid rgba(218, 191, 105, 0.62);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.85),
+    0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.opened-card__progress-fill {
+  height: 100%;
+  min-width: 0;
+  background:
+    linear-gradient(to bottom, #bdf7ef, #61d1c7 50%, #1b8e83);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 0 6px rgba(97, 209, 199, 0.45);
+  transition: width 0.18s ease-out;
 }
 
 .deck-message {
@@ -434,30 +529,31 @@
   gap: 5px;
 }
 
+.weak-mini-card .card-slot {
+  --rarity-aura-opacity: 0.32;
+  --rarity-aura-scale: 1.02;
+}
+
 .weak-mini-card__absorb {
   width: 100%;
   min-height: 22px;
   padding: 1px 3px 2px;
-  color: var(--text-help-jade);
+  color: var(--text-title-gold);
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 700;
   line-height: 1;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-align: center;
   background: rgba(0, 18, 8, 0.76);
   border: 1px solid rgba(127, 207, 192, 0.45);
   border-radius: 4px;
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.55);
   text-shadow: 0 1px 2px #000;
-  cursor: pointer;
 }
 
-.weak-mini-card__absorb:disabled {
+.weak-mini-card__absorb--locked {
   color: var(--text-muted-gold);
-  text-decoration: none;
   opacity: 0.72;
-  cursor: default;
 }
 
 .deck-actions--open {
@@ -522,3 +618,698 @@
     width: 100%;
   }
 }
+
+/* Title ribbon overlaps panel slightly for card view */
+.deck-title + .opened-card {
+  margin-top: -8px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Compact uniform action buttons for card view */
+.deck-actions {
+  padding: 6px 44px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.deck-actions .row-button {
+  height: 42px;
+  min-height: 42px;
+  font-size: 18px;
+}
+
+/* Decorative weak-cards panel (markup update required to use .weak-cards-panel) */
+.weak-cards-panel {
+  margin: 10px 36px 12px;
+  padding: 8px 10px 10px;
+  background: rgba(0, 0, 0, 0.28);
+  border-top: 1px solid rgba(190, 145, 54, 0.55);
+  border-bottom: 1px solid rgba(190, 145, 54, 0.35);
+  text-align: center;
+}
+
+.weak-cards-title {
+  color: #ffd76a;
+  font-family: var(--font-title);
+  font-size: 18px;
+  text-shadow: 0 1px 0 #000, 0 0 6px rgba(255, 180, 40, 0.35);
+}
+
+/* =========================================================
+   PATCH: opened card upgrade screen with bt_gold button
+   Файл кнопки має лежати тут:
+   assets/bt/bt_gold.png
+========================================================= */
+
+.deck-screen {
+  --deck-bt-gold: url("../../assets/bt/bt_gold.png");
+  --deck-bt-green: url("../../assets/bt/bt_green.png");
+}
+
+/* Компактніший контейнер екрана */
+.deck-panel {
+  padding: 2px 7px 8px !important;
+}
+
+/* Основна панель карти */
+.opened-card {
+  --card-w: 174px !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+
+  width: calc(100% - 18px) !important;
+  margin: -6px auto 8px !important;
+  padding: 10px 10px 12px !important;
+
+  display: grid !important;
+  grid-template-columns: 178px minmax(0, 1fr) !important;
+  gap: 10px !important;
+  align-items: center !important;
+
+  background:
+    radial-gradient(circle at 22% 26%, rgba(38, 130, 62, 0.28), transparent 42%),
+    linear-gradient(180deg, rgba(7, 42, 22, 0.94), rgba(1, 14, 8, 0.98)) !important;
+
+  border: 1px solid rgba(184, 140, 48, 0.88) !important;
+  border-radius: 7px !important;
+
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.86),
+    inset 0 0 0 1px rgba(70, 255, 110, 0.16),
+    0 0 8px rgba(0, 255, 90, 0.18) !important;
+
+  overflow: visible !important;
+}
+
+/* Карта зліва */
+.opened-card__preview {
+  width: 174px !important;
+  min-height: 260px !important;
+  padding: 4px !important;
+
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 205, 80, 0.12), transparent 68%),
+    rgba(0, 0, 0, 0.25) !important;
+
+  border: 1px solid rgba(190, 145, 54, 0.42) !important;
+  border-radius: 5px !important;
+
+  box-shadow:
+    inset 0 0 12px rgba(0, 0, 0, 0.7),
+    0 0 10px rgba(0, 0, 0, 0.75) !important;
+}
+
+.opened-card__preview .card-slot {
+  width: 164px !important;
+  height: 246px !important;
+}
+
+/* Інфо справа */
+.opened-card__info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+
+  padding-top: 4px !important;
+
+  color: #fff0b8 !important;
+  font-family: var(--font-body) !important;
+  font-size: 13px !important;
+  line-height: 1.12 !important;
+}
+
+.opened-card__stat {
+  grid-template-columns: 17px minmax(0, 1fr) !important;
+  gap: 5px !important;
+
+  color: #ffe18a !important;
+  font-family: var(--font-title) !important;
+  font-size: 13px !important;
+  line-height: 1.08 !important;
+  font-weight: 900 !important;
+}
+
+.opened-card__stat img,
+.opened-card__level-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.opened-card__line {
+  color: #fff0b8 !important;
+  font-size: 13px !important;
+  line-height: 1.12 !important;
+}
+
+.opened-card__protection {
+  margin-top: 4px !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+
+  color: #8feee0 !important;
+  font-size: 13px !important;
+  line-height: 1.1 !important;
+  text-decoration: underline !important;
+}
+
+/* Опис/колекція не має роздуувати праву колонку */
+.opened-card__line--muted {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+
+  color: #8feee0 !important;
+  font-size: 12px !important;
+  line-height: 1.12 !important;
+  text-decoration: underline !important;
+}
+
+/* Тонкий прогрес під карткою */
+.opened-card__progress {
+  width: calc(100% - 68px) !important;
+  height: 5px !important;
+  margin: 6px auto 10px !important;
+
+  background:
+    linear-gradient(180deg, #080500, #2d2109) !important;
+
+  border: 1px solid rgba(218, 191, 105, 0.7) !important;
+
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.75) !important;
+}
+
+.opened-card__progress-fill {
+  background:
+    linear-gradient(90deg, #28d950, #e4ff73) !important;
+}
+
+/* =========================================================
+   КНОПКА ПІДНЯТИ РІВЕНЬ — bt_gold
+========================================================= */
+
+.card-upgrade-button {
+  position: relative !important;
+
+  width: 212px !important;
+  height: 42px !important;
+  margin: 6px auto 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 0 18px 2px !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  background: var(--deck-bt-gold) center / 100% 100% no-repeat !important;
+
+  color: #fff8bd !important;
+  font-family: var(--font-title) !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+
+  text-align: center !important;
+  text-shadow:
+    0 1px 0 #000,
+    0 0 5px #000,
+    0 0 8px rgba(255, 180, 30, 0.45) !important;
+
+  cursor: pointer !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.8));
+}
+
+.card-upgrade-button:active {
+  transform: translateY(1px) scale(0.985) !important;
+  filter: brightness(0.86) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85)) !important;
+}
+
+/* Рядок ціни під золотою кнопкою */
+.card-upgrade-note {
+  width: 230px !important;
+  margin: 2px auto 8px !important;
+
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  align-items: center !important;
+
+  color: #fff2bc !important;
+  font-family: var(--font-body) !important;
+  font-size: 14px !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+
+  text-shadow: 0 1px 2px #000 !important;
+}
+
+.card-upgrade-note strong {
+  color: #74ff39 !important;
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   КНОПКА ПОГЛОТИТИ — зелена
+========================================================= */
+
+.card-absorb-button {
+  position: relative !important;
+
+  width: 212px !important;
+  height: 42px !important;
+  margin: 8px auto 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 0 18px 2px !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+
+  background: var(--deck-bt-green) center / 100% 100% no-repeat !important;
+
+  color: #eaffc2 !important;
+  font-family: var(--font-title) !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+
+  text-align: center !important;
+  text-shadow:
+    0 1px 0 #001600,
+    0 0 5px #000,
+    0 0 8px rgba(70, 255, 70, 0.35) !important;
+
+  cursor: pointer !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.8));
+}
+
+.card-absorb-button:active {
+  transform: translateY(1px) scale(0.985) !important;
+  filter: brightness(0.82) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85)) !important;
+}
+
+/* Рядок прогресу під зеленою кнопкою */
+.card-absorb-note {
+  margin: 2px auto 8px !important;
+
+  color: #d9d9d9 !important;
+  font-family: var(--font-body) !important;
+  font-size: 14px !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+
+  text-shadow: 0 1px 2px #000 !important;
+}
+
+.card-absorb-note strong {
+  color: #9dff00 !important;
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   Слабкі карти
+========================================================= */
+
+.weak-section-title {
+  width: calc(100% - 36px) !important;
+  height: 29px !important;
+  margin: 8px auto 8px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  color: #00212a !important;
+  font-family: var(--font-body) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+
+  background:
+    linear-gradient(180deg, #9fefff 0%, #60c8d8 52%, #287b8a 100%) !important;
+
+  border: 1px solid rgba(185, 255, 255, 0.72) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.58),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.34),
+    0 2px 5px rgba(0, 0, 0, 0.74) !important;
+
+  text-shadow: none !important;
+}
+
+.weak-mini-grid {
+  --card-w: 62px !important;
+  --card-h: 80px !important;
+
+  grid-template-columns: repeat(3, var(--card-w)) !important;
+  justify-content: center !important;
+  column-gap: 18px !important;
+  row-gap: 10px !important;
+
+  padding: 0 0 8px !important;
+}
+
+.weak-mini-card {
+  gap: 3px !important;
+}
+
+.weak-mini-card .card-slot {
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+}
+
+.weak-mini-card__absorb {
+  min-height: 16px !important;
+  padding: 0 !important;
+
+  color: #45bfff !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  font-size: 12px !important;
+  line-height: 1 !important;
+  text-decoration: underline !important;
+}
+
+.weak-mini-card__gain,
+.weak-mini-card__absorb strong {
+  display: block !important;
+  margin-top: 2px !important;
+
+  color: #baff00 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  text-decoration: none !important;
+}
+
+/* Нижні кнопки */
+.deck-actions:not(.deck-actions--open) {
+  margin-top: 4px !important;
+  padding: 0 2px !important;
+  gap: 2px !important;
+}
+
+.deck-actions:not(.deck-actions--open) .row-button {
+  height: 37px !important;
+  min-height: 37px !important;
+
+  padding-left: 44px !important;
+
+  font-size: 18px !important;
+  justify-content: flex-start !important;
+  background-size: 100% 122% !important;
+}
+
+/* Quick alignment fixes: pin upgrade/absorb blocks to the right of the info column */
+.opened-card__info {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: auto auto auto 1fr !important;
+  align-items: start !important;
+  gap: 8px !important;
+}
+
+/* Підганяємо контейнери апгрейду/поглинання вправо, щоб кнопки не зміщувались */
+.opened-card__info > div:nth-child(2),
+.opened-card__info > div:nth-child(3) {
+  margin-left: auto !important;
+  width: 100% !important;
+  max-width: 160px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+
+/* Забезпечимо, що кнопки всередині цих контейнерів займають всю їх ширину */
+.opened-card__info > div:nth-child(2) .card-upgrade-button,
+.opened-card__info > div:nth-child(3) .card-absorb-button {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* =========================================================
+   FINAL COMPOSITION PATCH: compact reference-like card page
+========================================================= */
+
+.opened-card {
+  width: calc(100% - 56px) !important;
+  max-width: 380px !important;
+
+  height: 294px !important;
+  min-height: 294px !important;
+
+  margin: -2px auto 14px !important;
+  padding: 10px 10px 12px !important;
+
+  display: grid !important;
+  grid-template-columns: 174px minmax(0, 1fr) !important;
+  gap: 10px !important;
+  align-items: start !important;
+
+  border-radius: 6px !important;
+  overflow: hidden !important;
+}
+
+/* Ліва карта */
+.opened-card__preview {
+  width: 174px !important;
+  height: 270px !important;
+  min-height: 270px !important;
+
+  align-self: center !important;
+}
+
+.opened-card__preview .card-slot {
+  width: 164px !important;
+  height: 246px !important;
+}
+
+/* Правий блок статів */
+.opened-card__info {
+  padding-top: 62px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+
+  max-width: 160px !important;
+  overflow-wrap: anywhere !important;
+  overflow: visible !important;
+}
+
+/* Рядки статів */
+.opened-card__stat {
+  grid-template-columns: 15px minmax(0, 1fr) !important;
+  gap: 4px !important;
+
+  font-size: 13px !important;
+  line-height: 1.05 !important;
+  font-weight: 900 !important;
+
+  color: #ffe18a !important;
+}
+
+.opened-card__stat img,
+.opened-card__level-icon {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.opened-card__stat span:last-child {
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  text-overflow: clip !important;
+}
+
+/* Захист */
+.opened-card__protection {
+  margin-top: 5px !important;
+
+  font-size: 12px !important;
+  line-height: 1 !important;
+
+  color: #8feee0 !important;
+  white-space: nowrap !important;
+}
+
+/* Розділювач */
+.opened-card__progress {
+  width: 268px !important;
+  max-width: 268px !important;
+
+  height: 5px !important;
+  margin: 0 auto 9px !important;
+
+  background:
+    linear-gradient(180deg, #100900, #36280b) !important;
+
+  border: 1px solid rgba(218, 191, 105, 0.75) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Кнопка підняття рівня */
+.card-upgrade-button {
+  width: 186px !important;
+  max-width: 186px !important;
+  height: 34px !important;
+
+  margin: 0 auto 2px !important;
+
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+/* Сила / Ціна */
+.card-upgrade-note {
+  width: 210px !important;
+  max-width: 210px !important;
+
+  margin: 0 auto 13px !important;
+
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  column-gap: 34px !important;
+
+  font-size: 13px !important;
+  line-height: 1.05 !important;
+}
+
+.card-upgrade-note strong {
+  font-size: 13px !important;
+}
+
+/* Кнопка поглинання */
+.card-absorb-button {
+  width: 186px !important;
+  max-width: 186px !important;
+  height: 34px !important;
+
+  margin: 0 auto 3px !important;
+
+  font-size: 16px !important;
+  line-height: 1 !important;
+}
+
+/* Прогрес поглинання */
+.card-absorb-note {
+  width: 210px !important;
+  max-width: 210px !important;
+
+  margin: 0 auto 11px !important;
+
+  font-size: 13px !important;
+  line-height: 1.05 !important;
+}
+
+/* Нижній золотий розділювач перед слабкими */
+.card-absorb-note::after {
+  content: "";
+  display: block;
+
+  width: 270px;
+  height: 5px;
+
+  margin: 12px auto 8px;
+  transform: translateX(-30px);
+
+  background:
+    linear-gradient(180deg, #100900, #36280b);
+
+  border: 1px solid rgba(218, 191, 105, 0.75);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Заголовок "Слабкі карти" */
+.weak-section-title {
+  width: 312px !important;
+  max-width: 312px !important;
+
+  height: 30px !important;
+  min-height: 30px !important;
+
+  margin: 0 auto 8px !important;
+
+  font-size: 13px !important;
+}
+
+/* Повідомлення */
+.deck-message {
+  margin: 0 16px 17px !important;
+
+  font-size: 12px !important;
+  line-height: 1.15 !important;
+}
+
+/* Нижні кнопки */
+.deck-actions:not(.deck-actions--open) {
+  width: 242px !important;
+  max-width: 242px !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  gap: 9px !important;
+}
+
+.deck-actions:not(.deck-actions--open) .row-button {
+  height: 33px !important;
+  min-height: 33px !important;
+
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+/* CENTER SCREEN + raise card data + hide duplicate progress + remove blue weak header */
+.deck-panel {
+  margin: 12px auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* підняти дані карти: трохи зменшити padding-top */
+.opened-card__info {
+  padding-top: 62px !important;
+}
+
+/* Сховати дубль прогрес-бар, якщо він рендериться всередині .opened-card */
+.opened-card > .opened-card__progress {
+  display: none !important;
+}
+
+/* Hide any progress bars rendered inside the opened-card container (keep the single one rendered after it) */
+.opened-card .opened-card__progress {
+  display: none !important;
+}
+
+/* Hide decorative divider added under absorb note to avoid duplicate bars */
+.card-absorb-note::after {
+  display: none !important;
+}
+
+/* Зробити заголовок слабких карт нейтральним (прибрати синій фон) */
+.weak-section-title {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--text-title-gold) !important;
+}
+
+
+
+

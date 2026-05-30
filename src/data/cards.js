@@ -23,11 +23,12 @@ for (const p in images) {
 }
 
 export const CARD_MAX_LEVEL = SEED_MAX_LEVEL;
+export const CARD_LEVEL_1_POWER = 10;
 
-// Cards from the canonical seed. power = basePower at level 1 for UI display.
+// Cards from the canonical seed. Power follows the shared level table.
 export const CARDS = SEED_CARDS.map((card) => ({
   ...card,
-  power: card.basePower,
+  power: CARD_LEVEL_1_POWER,
   // Найти art: сначала точний збіг по id, потім по нормалізованому включенню
   art: (() => {
     const id = card.id;

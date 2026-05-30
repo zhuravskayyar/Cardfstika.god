@@ -21,6 +21,7 @@ export default function CardSlot({
   name,
   origin,
   art,
+  rarity = 'common',
   selected = false,
   onClick,
   minimal = false,
@@ -29,6 +30,7 @@ export default function CardSlot({
   const Root = onClick ? 'button' : 'div';
   const powerText = power == null ? '' : String(power);
   const powerDigits = Math.min(powerText.length, 5);
+  const rarityClass = `card-slot--rarity-${rarity ?? 'common'}`;
 
   if (minimal) {
     return (
@@ -40,7 +42,7 @@ export default function CardSlot({
 
   return (
     <Root
-      className={`card-slot card-slot--${element}${empty ? ' card-slot--empty' : ''}${selected ? ' card-slot--selected' : ''}`}
+      className={`card-slot card-slot--${element} ${rarityClass}${empty ? ' card-slot--empty' : ''}${selected ? ' card-slot--selected' : ''}`}
       onClick={onClick}
       type={onClick ? 'button' : undefined}
       aria-label={name ? `${name}, ${origin ?? ''}` : undefined}

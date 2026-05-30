@@ -101,12 +101,12 @@ function CardPackResult({ result, onClose }) {
       )}
 
       <div className="purchase-card-result__showcase">
-        <div className={`purchase-card-result__glow purchase-card-result__glow--${reward?.rarity}`} />
         {card && (
           <div className="purchase-card-result__card">
             <CardSlot
               power={reward.power}
               element={card.element}
+              rarity={reward.rarity}
               art={card.art}
               name={card.name}
               origin={card.collectionId}

@@ -1,17 +1,20 @@
 import { STARTER_CARDS } from './cards.seed.js';
 import { cards } from '../data/cards.js';
 import { collections } from '../data/collections.js';
+import { getDeckPowerFromOwnedCards } from '../engine/deckModel.js';
+import { getCardPower } from '../engine/powerEngine.js';
 
 export const ACCOUNT_STORAGE_KEY = 'cardastika:account';
-export const ACCOUNT_SCHEMA_VERSION = 2;
-export const STARTER_CARD_POWER = 12;
+export const ACCOUNT_SCHEMA_VERSION = 3;
+export const STARTER_CARD_POWER = 10;
 export const DEFAULT_ACCOUNT_NAME = 'Гравець';
 
 const DEFAULT_PLAYER = Object.freeze({
   level: 1,
   exp: 0,
   expToNext: 100,
-  gold: 0,
+  // Тимчасово для тестування: початковий запас золота
+  gold: 5000,
   silver: 500,
   gems: 0,
   stars: 0,
@@ -92,6 +95,25 @@ function normalizeBirthDate(raw) {
   const date = new Date(`${value}T00:00:00.000Z`);
   if (Number.isNaN(date.getTime())) return null;
   return date.toISOString().slice(0, 10) === value ? value : null;
+}
+
+function recalculateOwnedCards(ownedCards = []) {
+  const baseById = new Map(cards.map((card) => [card.id, card]));
+  return ownedCards.map((card) => {
+    const level = Math.max(1, Number(card.level) || 1);
+    const base = baseById.get(card.cardId);
+    return {
+      ...card,
+      element: base?.element,
+      rarity: card.rarity ?? base?.rarity ?? 'common',
+      level,
+      power: base ? getCardPower(base, level) : 0,
+      copies: Number(card.copies) || 0,
+      upgradeProgressElements: Number(card.upgradeProgressElements) || 0,
+      absorbedElements: Number(card.absorbedElements) || 0,
+      protected: Boolean(card.protected),
+    };
+  });
 }
 
 export function validateAccountName(name) {
@@ -198,7 +220,7 @@ export function resetAccount() {
 export function loadAccount() {
   if (!canUseStorage()) return createDefaultAccount();
   const stored = safeParse(window.localStorage.getItem(ACCOUNT_STORAGE_KEY));
-  if (!stored || stored.schemaVersion !== ACCOUNT_SCHEMA_VERSION) {
+  if (!stored) {
     return resetAccount();
   }
   return normalizeAccount(stored);
@@ -212,6 +234,9 @@ export function normalizeAccount(rawAccount) {
   const credentialName = validateAccountName(account.credentials?.username).ok
     ? validateAccountName(account.credentials?.username).name
     : '';
+  const ownedCards = Array.isArray(account.ownedCards)
+    ? recalculateOwnedCards(account.ownedCards.filter((card) => card?.cardId))
+    : [];
 
   return {
     ...account,
@@ -226,6 +251,7 @@ export function normalizeAccount(rawAccount) {
     player: {
       ...clone(DEFAULT_PLAYER),
       ...(account.player && typeof account.player === 'object' ? account.player : {}),
+      power: getDeckPowerFromOwnedCards(ownedCards),
       name: profileName,
     },
     profile: {
@@ -240,19 +266,7 @@ export function normalizeAccount(rawAccount) {
         ...(account.profile?.avatar && typeof account.profile.avatar === 'object' ? account.profile.avatar : {}),
       },
     },
-    ownedCards: Array.isArray(account.ownedCards)
-      ? account.ownedCards
-        .filter((card) => card?.cardId)
-        .map((card) => ({
-          ...card,
-          level: Math.max(1, Number(card.level) || 1),
-          power: Number(card.power) || 0,
-          copies: Number(card.copies) || 0,
-          upgradeProgressElements: Number(card.upgradeProgressElements) || 0,
-          absorbedElements: Number(card.absorbedElements) || 0,
-          protected: Boolean(card.protected),
-        }))
-      : [],
+    ownedCards,
     purchaseCounts: account.purchaseCounts && typeof account.purchaseCounts === 'object' ? account.purchaseCounts : {},
     shopCardChances: {
       ...clone(DEFAULT_SHOP_CARD_CHANCES),

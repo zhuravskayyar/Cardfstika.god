@@ -6,7 +6,7 @@ import {
   getSameElementWeakCardsForTarget,
   withUpgradeIndicators,
 } from '../../engine/deckModel.js';
-import { getGoldUpgradeCost, getUpgradeProgress } from '../../engine/upgradeEngine.js';
+import { getCardAvailableElements, getGoldUpgradeCost, getUpgradeProgress } from '../../engine/upgradeEngine.js';
 import RowButton from '../ui/RowButton.jsx';
 import CardSlot, { ELEMENT_ICONS } from './CardSlot.jsx';
 import '../../styles/components/DeckScreen.css';
@@ -33,9 +33,42 @@ function UpgradeArrow({ type, onClick, title }) {
         onClick?.();
       }}
     >
-      ↑
+      <span aria-hidden="true" />
     </button>
   );
+}
+
+function getUpgradeArrowTitle(type) {
+  if (type === 'gold') return 'Покращити за золото';
+  if (type === 'free') return 'Покращити безкоштовно';
+  if (type === 'absorb') return 'Є слабкі карти для покращення';
+  return '';
+}
+
+function getWeakCardUpgradePercent(targetCard, weakCard) {
+  const progress = getUpgradeProgress(targetCard);
+  const required = Number(progress.required) || 0;
+  if (progress.isMax || required <= 0) return 0;
+  return Math.max(1, Math.floor((getCardAvailableElements(weakCard) / required) * 100));
+}
+
+function canReachFreeUpgradeByAbsorption(state, card) {
+  const progress = getUpgradeProgress(card);
+  if (progress.isMax || progress.isGolden || progress.required <= 0 || progress.current >= progress.required) {
+    return false;
+  }
+
+  const available = getSameElementWeakCardsForTarget(state, card)
+    .filter((weakCard) => !weakCard.protected)
+    .reduce((sum, weakCard) => sum + getCardAvailableElements(weakCard), 0);
+  return progress.current + available >= progress.required;
+}
+
+function withAbsorbUpgradeIndicators(cards = [], state) {
+  return cards.map((card) => ({
+    ...card,
+    upgradeIndicator: card.upgradeIndicator ?? (canReachFreeUpgradeByAbsorption(state, card) ? 'absorb' : null),
+  }));
 }
 
 function DeckCard({ card, onOpenCard, onUpgradeFree, onUpgradeWithGold }) {
@@ -43,17 +76,20 @@ function DeckCard({ card, onOpenCard, onUpgradeFree, onUpgradeWithGold }) {
     ? () => onUpgradeWithGold?.(card.id)
     : card.upgradeIndicator === 'free'
       ? () => onUpgradeFree?.(card.id)
-      : undefined;
+      : card.upgradeIndicator === 'absorb'
+        ? () => onOpenCard?.(card.id)
+        : undefined;
   return (
     <div className="deck-card-wrap">
       <UpgradeArrow
         type={card.upgradeIndicator}
-        title={card.upgradeIndicator === 'gold' ? 'Покращити за золото' : 'Покращити безкоштовно'}
+        title={getUpgradeArrowTitle(card.upgradeIndicator)}
         onClick={upgradeAction}
       />
       <CardSlot
         power={card.power}
         element={card.element}
+        rarity={card.rarity}
         art={card.art}
         name={card.name}
         origin={card.origin}
@@ -165,6 +201,12 @@ function OpenCardScreen({
 }) {
   const progress = getUpgradeProgress(card);
   const goldCost = getGoldUpgradeCost(card);
+  const progressPercent = progress.isMax
+    ? 100
+    : Math.round((progress.ratio || 0) * 100);
+  const powerGain = Math.max(1, Math.round((card.power || 0) * 0.03));
+  const absorbGain = (sameElementWeakCards || []).reduce((sum, w) => sum + getWeakCardUpgradePercent(card, w), 0);
+
   return (
     <>
       <div className="deck-title">
@@ -179,34 +221,66 @@ function OpenCardScreen({
             onUpgradeWithGold={onUpgradeWithGold}
           />
         </div>
+
         <div className="opened-card__info">
-          <div className="opened-card__stat">
-            <img src={powerIcon} alt="" draggable={false} />
-            <span>Сила: {card.power}</span>
+          <div>
+            <div className="opened-card__stat">
+              <img src={powerIcon} alt="" draggable={false} />
+              <span>Сила: {card.power}</span>
+            </div>
+            <div className="opened-card__stat">
+              <span className="opened-card__level-icon">↑</span>
+              <span>Рівень: {card.level}</span>
+            </div>
+            <div className="opened-card__stat">
+              <img src={ELEMENT_ICONS[card.element]} alt="" draggable={false} />
+              <span>Стихія: {card.elementName}</span>
+            </div>
+            <button className="opened-card__protection" type="button" onClick={() => onToggleProtection(card.id)}>
+              {card.protected ? 'Захищена' : 'Не захищена'}
+            </button>
           </div>
-          <div className="opened-card__stat">
-            <span className="opened-card__level-icon">↑</span>
-            <span>Рівень: {card.level}</span>
-          </div>
-          <div className="opened-card__stat">
-            <img src={ELEMENT_ICONS[card.element]} alt="" draggable={false} />
-            <span>Стихія: {card.elementName}</span>
-          </div>
-          <button className="opened-card__protection" type="button" onClick={() => onToggleProtection(card.id)}>
-            {card.protected ? 'Захищена' : 'Не захищена'}
-          </button>
-          <div className="opened-card__line">
-            Прогрес: {Math.floor(progress.current)}/{Math.ceil(progress.required || 0)}
-          </div>
-          {progress.isGolden && (
-            <div className="opened-card__line">Золотий рівень: {goldCost} золота</div>
-          )}
-          <div className="opened-card__line">{card.origin}</div>
-          <div className="opened-card__line opened-card__line--muted">{card.note}</div>
+
         </div>
       </div>
 
-      <div className="opened-card__separator" />
+      {/* Upgrade block (moved below card info) */}
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <div>
+          <button
+            className="card-upgrade-button"
+            type="button"
+            onClick={() => onUpgradeWithGold(card.id)}
+            disabled={progress.isMax}
+          >
+            Підняти рівень
+          </button>
+          <div className="card-upgrade-note">
+            <span>Сила: <strong>+{powerGain}</strong></span>
+            <span>Ціна: <strong>{goldCost}</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <div>
+          <button
+            className="card-absorb-button"
+            type="button"
+            onClick={() => {
+              if (sameElementWeakCards.length > 0) onAbsorb(card.id, sameElementWeakCards[0].id);
+            }}
+            disabled={sameElementWeakCards.length === 0}
+          >
+            зкормити
+          </button>
+          <div className="card-absorb-note">Прогрес рівня: <strong>+{absorbGain}%</strong></div>
+        </div>
+      </div>
+
+      <div className="opened-card__progress" aria-label={`Прогрес прокачки ${progressPercent}%`}>
+        <div className="opened-card__progress-fill" style={{ width: `${progressPercent}%` }} />
+      </div>
 
       <div className="weak-section-title">Слабкі карти</div>
 
@@ -216,18 +290,15 @@ function OpenCardScreen({
             <div className="weak-mini-card" key={weakCard.id}>
               <DeckCard
                 card={weakCard}
-                onOpenCard={() => {}}
+                onOpenCard={() => {
+                  if (!weakCard.protected) onAbsorb(card.id, weakCard.id);
+                }}
                 onUpgradeFree={onUpgradeFree}
                 onUpgradeWithGold={onUpgradeWithGold}
               />
-              <button
-                className="weak-mini-card__absorb"
-                type="button"
-                disabled={weakCard.protected}
-                onClick={() => onAbsorb(card.id, weakCard.id)}
-              >
-                {weakCard.protected ? 'Захищена' : 'Поглинути'}
-              </button>
+              <div className={`weak-mini-card__absorb${weakCard.protected ? ' weak-mini-card__absorb--locked' : ''}`}>
+                {weakCard.protected ? 'Захищена' : `+${getWeakCardUpgradePercent(card, weakCard)}%`}
+              </div>
             </div>
           ))}
         </div>
@@ -250,7 +321,7 @@ export default function DeckScreen() {
   const { state, dispatch } = useGame();
   const playerGold = Number(state.player?.gold) || 0;
   const cards = useMemo(
-    () => withUpgradeIndicators(buildBattleDeckCards(state), playerGold),
+    () => withAbsorbUpgradeIndicators(withUpgradeIndicators(buildBattleDeckCards(state), playerGold), state),
     [state, playerGold],
   );
   const weakCards = useMemo(

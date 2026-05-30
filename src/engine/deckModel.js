@@ -3,6 +3,10 @@ import { rarityRank } from '../data/rarity.js';
 import { getCardLevelForPower, getCardPower, getOwnedCardPower } from './powerEngine.js';
 import { getUpgradeIndicator } from './upgradeEngine.js';
 
+const BALANCED_DECK_SIZE = 9;
+const BALANCED_ELEMENT_CAP = 3;
+const ELEMENT_ORDER = ['air', 'water', 'earth', 'fire'];
+
 export function normalizeOwnedCards(state) {
   const cardById = new Map((state.cards ?? []).map((card) => [card.id, card]));
   return (state.ownedCards ?? [])
@@ -40,8 +44,72 @@ function sortCardsByDeckPower(cards) {
   });
 }
 
+function pickStrongestBalancedCards(cards, size = BALANCED_DECK_SIZE) {
+  const sorted = sortCardsByDeckPower(cards);
+  const byElement = new Map(ELEMENT_ORDER.map((element) => [element, []]));
+  const extraElements = [];
+
+  for (const card of sorted) {
+    if (!byElement.has(card.element)) {
+      byElement.set(card.element, []);
+      extraElements.push(card.element);
+    }
+    byElement.get(card.element).push(card);
+  }
+
+  const elementOrder = [
+    ...ELEMENT_ORDER,
+    ...extraElements.filter((element) => !ELEMENT_ORDER.includes(element)),
+  ].filter((element) => byElement.get(element)?.length);
+  const picked = [];
+  const pickedIds = new Set();
+  const counts = new Map();
+
+  function take(card) {
+    if (!card || pickedIds.has(card.id)) return false;
+    picked.push(card);
+    pickedIds.add(card.id);
+    counts.set(card.element, (counts.get(card.element) ?? 0) + 1);
+    return true;
+  }
+
+  for (let round = 0; round < BALANCED_ELEMENT_CAP && picked.length < size; round += 1) {
+    const candidates = elementOrder
+      .map((element) => byElement.get(element)?.[round])
+      .filter(Boolean)
+      .sort((a, b) => {
+        const aCount = counts.get(a.element) ?? 0;
+        const bCount = counts.get(b.element) ?? 0;
+        if (aCount !== bCount) return aCount - bCount;
+        return sortCardsByDeckPower([a, b])[0] === a ? -1 : 1;
+      });
+
+    for (const card of candidates) {
+      if (picked.length >= size) break;
+      take(card);
+    }
+  }
+
+  if (picked.length < size) {
+    for (const card of sorted) {
+      if (picked.length >= size) break;
+      if (pickedIds.has(card.id)) continue;
+      const elementCount = counts.get(card.element) ?? 0;
+      const hasOtherOptions = sorted.some(
+        (candidate) => !pickedIds.has(candidate.id)
+          && candidate.element !== card.element
+          && (counts.get(candidate.element) ?? 0) < BALANCED_ELEMENT_CAP,
+      );
+      if (elementCount >= BALANCED_ELEMENT_CAP && hasOtherOptions) continue;
+      take(card);
+    }
+  }
+
+  return picked;
+}
+
 export function buildBattleDeckCards(state) {
-  return sortCardsByDeckPower(normalizeOwnedCards(state)).slice(0, 9);
+  return pickStrongestBalancedCards(normalizeOwnedCards(state));
 }
 
 export function buildWeakDeckCards(state) {
@@ -50,8 +118,7 @@ export function buildWeakDeckCards(state) {
 }
 
 export function getDeckPowerFromOwnedCards(cards = []) {
-  return sortCardsByDeckPower(cards)
-    .slice(0, 9)
+  return pickStrongestBalancedCards(cards)
     .reduce((sum, card) => sum + (Number(card.power) || 0), 0);
 }
 

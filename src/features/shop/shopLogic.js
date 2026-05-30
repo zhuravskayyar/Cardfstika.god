@@ -2,6 +2,7 @@
 // Залежність: Shop → Rewards → Inventory → Collections → Deck recalculation
 
 import { CARDS } from '../../data/cards.js';
+import { getDeckPowerFromOwnedCards } from '../../engine/deckModel.js';
 import { getCardPower } from '../../engine/powerEngine.js';
 import { QUALITY_LEVEL_RANGES } from './shopCardPacks.js';
 
@@ -83,10 +84,16 @@ function makeOwnedCard(cardId, quality) {
 }
 
 function getOwnedDeckPower(ownedCards = []) {
-  return [...ownedCards]
-    .sort((a, b) => (Number(b.power) || 0) - (Number(a.power) || 0))
-    .slice(0, 9)
-    .reduce((sum, card) => sum + (Number(card.power) || 0), 0);
+  const baseById = new Map(CARDS.map((card) => [card.id, card]));
+  return getDeckPowerFromOwnedCards(ownedCards.map((card) => {
+    const base = baseById.get(card.cardId);
+    return {
+      ...card,
+      id: card.cardId,
+      element: base?.element,
+      rarity: card.rarity ?? base?.rarity ?? 'common',
+    };
+  }));
 }
 
 export function getPaymentPlan(item, player = {}, selectedCurrency = item.price?.currency) {

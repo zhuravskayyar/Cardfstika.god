@@ -8,7 +8,8 @@ export const initialState = {
     power: 108,
     exp: 0,
     expToNext: 100,
-    gold: 0,
+    // Встановлено тимчасово для тесту
+    gold: 5000,
     silver: 0,
     gems: 0,
     stars: 0,
