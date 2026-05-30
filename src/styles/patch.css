@@ -178,6 +178,24 @@
   max-width: 420px !important;
 }
 
+/* Global screen insets: make all screens use the same side paddings
+   and ensure their inner panels stay centered without shifting. */
+:root {
+  --screen-inset-left: 24px;
+  --screen-inset-right: 24px;
+}
+
+[class$="-screen"], .screen {
+  padding-left: var(--screen-inset-left) !important;
+  padding-right: var(--screen-inset-right) !important;
+  box-sizing: border-box !important;
+}
+
+[class$="-screen"] > * , .screen > * {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 /* Make deck screen behave like home/main menu: center content both axes
    and ensure the inner panel is constrained and horizontally centered. */
 .deck-screen {
