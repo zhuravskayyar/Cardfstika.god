@@ -199,7 +199,9 @@
 /* Make deck screen behave like home/main menu: center content both axes
    and ensure the inner panel is constrained and horizontally centered. */
 .deck-screen {
-  justify-content: center !important;
+  justify-content: flex-start !important;
+  /* bump left inset specifically for deck screen */
+  padding-left: calc(var(--screen-inset-left) + 10px) !important;
 }
 
 .deck-screen .deck-panel {
@@ -207,4 +209,5 @@
   width: 100% !important;
   margin: 0 auto !important;
   box-sizing: border-box !important;
+  padding-top: 12px !important;
 }
