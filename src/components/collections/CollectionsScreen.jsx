@@ -258,12 +258,15 @@ function CardDetail({ card, collection, ownedCardIds, dispatch }) {
       </div>
 
       <div className="collection-card-detail">
-        <div
-          className={`card-art-blank card-art-blank--${card.element ?? 'fire'}${isOwned ? '' : ' card-art-blank--locked'}`}
-        >
-            {card.art ? (
-              <img className="card-art-blank__img" src={card.art} alt={card.name} draggable={false} />
-            ) : null}
+        <div className={isOwned ? 'collection-card-detail__card' : 'collection-card-detail__card collection-card-detail__card--locked'}>
+          <CardSlot
+            power={card.power}
+            element={card.element}
+            rarity={card.rarity}
+            art={card.art}
+            name={card.name}
+            origin={collection.name}
+          />
         </div>
 
         {card.bio && (

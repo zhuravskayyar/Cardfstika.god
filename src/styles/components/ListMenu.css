@@ -3,13 +3,16 @@
   flex-direction: column;
   flex: 0 0 var(--list-menu-height);
   min-height: 0;
-  padding: clamp(2px, 0.35dvh, 4px) var(--row-menu-inset-right) 0 var(--row-menu-inset-left);
-  gap: clamp(1px, 0.25dvh, 3px);
+  width: 100%;
+  max-width: 425px;
+  padding: 0 var(--row-menu-inset-right) 0 var(--row-menu-inset-left);
+  gap: 3px;
+  box-sizing: border-box;
 }
 
 .home-screen .list-menu {
   align-self: stretch;
-  justify-content: center;
+  justify-content: flex-start;
+  margin: 0 auto;
   padding-top: 0;
-  gap: 2px;
 }

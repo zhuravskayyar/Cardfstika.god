@@ -281,7 +281,7 @@ button.card-slot:active {
   overflow: hidden;
   text-overflow: ellipsis;
 
-  transform: translateY(0);
+  transform: translateY(2px);
 }
 
 /* Розміри для довгих значень сили */

@@ -522,6 +522,43 @@
   padding: 0 0 8px;
 }
 
+/* When weak-mini-grid follows an opened-card, constrain it to opened-card width and show thumbnails in a row */
+.opened-card + .weak-mini-grid,
+.opened-card ~ .weak-mini-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 10px !important;
+  justify-content: flex-start !important;
+  width: 240px !important;
+  margin: 6px auto 12px !important;
+  padding: 6px !important;
+}
+
+.opened-card + .weak-mini-grid .weak-mini-card,
+.opened-card ~ .weak-mini-grid .weak-mini-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.weak-mini-card .card-slot {
+  border-radius: 6px !important;
+}
+
+.weak-mini-card__absorb {
+  background: transparent !important;
+  color: #bfffbf !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  text-align: center !important;
+}
+
+.weak-mini-card__absorb--locked {
+  color: var(--text-muted-gold) !important;
+  opacity: 0.8 !important;
+}
+
 .weak-mini-card {
   min-width: 0;
   display: grid;
@@ -558,6 +595,24 @@
 
 .deck-actions--open {
   margin-top: 6px;
+}
+
+/* When deck-actions are shown for an open card, constrain width to preview width and left-align */
+.opened-card .deck-actions.deck-actions--open {
+  width: 240px !important;
+  max-width: 240px !important;
+  margin: 8px 0 0 0 !important;
+  padding: 0 !important;
+  gap: 8px !important;
+  align-items: stretch !important;
+}
+
+.opened-card .deck-actions.deck-actions--open .row-button {
+  height: 36px !important;
+  min-height: 36px !important;
+  justify-content: flex-start !important;
+  padding-left: 12px !important;
+  width: 100% !important;
 }
 
 @media (max-width: 360px) {
@@ -1310,6 +1365,937 @@
   color: var(--text-title-gold) !important;
 }
 
+/* Custom two-column composition: preview left, info right, overall ~360px */
+.opened-card {
+  max-width: 360px !important;
+  width: calc(100% - 56px) !important;
+  grid-template-columns: 240px minmax(0, 1fr) !important;
+  gap: 12px !important;
+  align-items: start !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
 
+.opened-card__preview {
+  width: 240px !important;
+  min-height: 300px !important;
+  padding: 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
 
+.opened-card__preview .card-slot {
+  width: 224px !important;
+  height: 336px !important;
+  --card-w: 224px !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+  margin-bottom: 8px !important;
+}
 
+/* Actions that sit under the preview and aligned to left */
+.opened-card__preview-actions {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  align-items: flex-start !important;
+}
+
+.opened-card__preview-actions > div {
+  width: 100% !important;
+}
+
+.card-upgrade-button,
+.card-absorb-button {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  text-align: left !important;
+  padding-left: 12px !important;
+}
+
+.card-upgrade-note,
+.card-absorb-note {
+  text-align: left !important;
+  margin: 4px 0 10px !important;
+  width: 100% !important;
+}
+
+/* Lower quick-action buttons: make wider and left-aligned text */
+.deck-actions:not(.deck-actions--open) {
+  width: 320px !important;
+  max-width: 320px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  gap: 8px !important;
+  align-items: flex-start !important;
+}
+
+.deck-actions:not(.deck-actions--open) .row-button {
+  justify-content: flex-start !important;
+  padding-left: 14px !important;
+  text-align: left !important;
+}
+
+@media (max-width: 520px) {
+  .opened-card {
+    grid-template-columns: 1fr !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .opened-card__preview {
+    width: 100% !important;
+    min-height: auto !important;
+    align-items: center !important;
+  }
+
+  .opened-card__preview .card-slot {
+    width: 68% !important;
+    height: auto !important;
+  }
+
+  .card-upgrade-button,
+  .card-absorb-button {
+    text-align: center !important;
+    padding-left: 0 !important;
+  }
+
+  .deck-actions:not(.deck-actions--open) {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 8px !important;
+  }
+}
+
+/* Final card detail layout: reference composition without page dimming. */
+.deck-panel {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 22px 20px 8px !important;
+  background: transparent !important;
+  align-items: stretch !important;
+}
+
+.deck-title {
+  width: 100% !important;
+  max-width: none !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  margin: 0 0 10px !important;
+  padding: 5px 54px 12px !important;
+  overflow: hidden !important;
+}
+
+.deck-title__text {
+  max-height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+  line-height: 0.9 !important;
+  overflow-wrap: anywhere !important;
+  font-size: clamp(14px, 4vw, 20px) !important;
+}
+
+.deck-title + .opened-card,
+.opened-card {
+  --card-w: clamp(146px, 41vw, 168px) !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+  width: 100% !important;
+  max-width: 353px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 auto 18px !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: var(--card-w) minmax(0, 1fr) !important;
+  gap: 12px !important;
+  align-items: start !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.opened-card__preview {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: var(--card-w) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.opened-card__preview .deck-card-wrap {
+  width: var(--card-w) !important;
+}
+
+.opened-card__preview .card-slot {
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+  --card-w: clamp(146px, 41vw, 168px) !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+  margin: 0 !important;
+}
+
+.opened-card__info {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  max-width: none !important;
+  padding: 28px 0 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  color: var(--text-main-parchment) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.opened-card__stat {
+  grid-template-columns: 20px minmax(0, 1fr) !important;
+  gap: 7px !important;
+  color: var(--text-main-parchment) !important;
+  font-family: var(--font-body) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  line-height: 1.08 !important;
+}
+
+.opened-card__stat span:last-child {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.opened-card__protection {
+  margin-top: 7px !important;
+  color: var(--text-help-jade) !important;
+  font-family: var(--font-body) !important;
+  font-size: 17px !important;
+  line-height: 1.05 !important;
+  text-align: left !important;
+}
+
+.opened-card__preview-actions {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  width: min(100%, 250px) !important;
+  margin: 18px auto 0 !important;
+  display: grid !important;
+  gap: 8px !important;
+  justify-items: center !important;
+  align-items: center !important;
+}
+
+.opened-card__preview-actions > div {
+  width: 100% !important;
+}
+
+.card-upgrade-button,
+.card-absorb-button {
+  width: 100% !important;
+  max-width: 250px !important;
+  height: 38px !important;
+  margin: 0 auto !important;
+  padding: 7px 16px 0 !important;
+  justify-content: center !important;
+  text-align: center !important;
+  font-size: 18px !important;
+}
+
+.card-upgrade-note,
+.card-absorb-note {
+  width: 100% !important;
+  max-width: 250px !important;
+  margin: 2px auto 0 !important;
+  color: var(--text-main-parchment) !important;
+  font-family: var(--font-body) !important;
+  font-size: 15px !important;
+  line-height: 1.1 !important;
+  text-align: left !important;
+}
+
+.card-upgrade-note {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+}
+
+.card-upgrade-note strong,
+.card-absorb-note strong,
+.weak-mini-card__absorb {
+  color: #9dff00 !important;
+}
+
+.card-absorb-note::after {
+  display: none !important;
+}
+
+.opened-card__progress {
+  width: min(100%, 296px) !important;
+  max-width: 296px !important;
+  height: 5px !important;
+  margin: 8px auto 10px !important;
+}
+
+.weak-section-title {
+  width: min(100%, 296px) !important;
+  max-width: 296px !important;
+  height: auto !important;
+  min-height: 24px !important;
+  margin: 0 auto 8px !important;
+  color: var(--text-title-gold) !important;
+  font-family: var(--font-title) !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: 0 1px 2px #000 !important;
+}
+
+.deck-message {
+  width: min(100%, 296px) !important;
+  min-height: 128px !important;
+  margin: 0 auto 12px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  color: var(--text-main-parchment) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+.weak-mini-grid {
+  --card-w: 70px !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+  width: min(100%, 296px) !important;
+  height: 128px !important;
+  max-height: 128px !important;
+  margin: 0 auto 12px !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  grid-template-columns: repeat(3, var(--card-w)) !important;
+  justify-content: center !important;
+  gap: 10px 16px !important;
+}
+
+.weak-mini-grid::-webkit-scrollbar {
+  display: none !important;
+}
+
+.weak-mini-card .card-slot {
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+}
+
+.opened-card ~ .weak-mini-grid {
+  --card-w: 70px !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, var(--card-w)) !important;
+  justify-content: center !important;
+  align-items: start !important;
+  width: min(100%, 296px) !important;
+  max-width: 296px !important;
+  height: 128px !important;
+  max-height: 128px !important;
+  margin: 0 auto 12px !important;
+  padding: 0 0 4px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  gap: 10px 16px !important;
+}
+
+.opened-card ~ .weak-mini-grid::-webkit-scrollbar {
+  display: none !important;
+}
+
+.opened-card ~ .weak-mini-grid .weak-mini-card {
+  display: grid !important;
+  grid-template-rows: var(--card-h) auto !important;
+  justify-items: center !important;
+  align-items: start !important;
+  width: var(--card-w) !important;
+  gap: 5px !important;
+}
+
+.opened-card ~ .weak-mini-grid .weak-mini-card .card-slot {
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+}
+
+.opened-card ~ .weak-mini-grid .weak-mini-card__absorb {
+  min-height: 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #9dff00 !important;
+  font-family: var(--font-title) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-shadow: 0 1px 2px #000 !important;
+}
+
+.opened-card ~ .weak-mini-grid .weak-mini-card__absorb--locked {
+  color: var(--text-muted-gold) !important;
+}
+
+.deck-actions.deck-actions--open {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 16px 0 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  gap: 6px !important;
+  justify-items: stretch !important;
+}
+
+.deck-actions.deck-actions--open .row-button {
+  width: 100% !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  grid-template-columns: 50px minmax(0, 1fr) 24px !important;
+  padding: 0 12px 0 9px !important;
+  background-image: url("../../assets/button.png") !important;
+  background-size: 100% 122% !important;
+}
+
+.deck-actions.deck-actions--open .row-button__title {
+  max-height: 38px !important;
+  padding: 10px 0 0 4px !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  font-size: clamp(15px, 4.2vw, 21px) !important;
+  line-height: 0.88 !important;
+}
+
+@media (max-width: 360px) {
+  .deck-title + .opened-card,
+  .opened-card {
+    --card-w: 112px !important;
+    grid-template-columns: var(--card-w) minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .opened-card__stat,
+  .opened-card__protection {
+    font-size: 14px !important;
+  }
+}
+
+/* =========================================================
+   HOTFIX: Deck opened-card screen composition
+   Put this block at the VERY END of DeckScreen.css.
+   Fixes:
+   - removes huge empty gap before bottom buttons
+   - keeps title ribbon readable
+   - keeps card/info/actions in one compact stack
+   - prevents old duplicated rules from overriding layout
+========================================================= */
+
+.deck-panel {
+  width: 100% !important;
+  min-height: auto !important;
+  margin: 0 auto !important;
+  padding: 8px 28px 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  background: transparent !important;
+}
+
+/* Title / name ribbon */
+.deck-title {
+  width: min(284px, calc(100vw - 150px)) !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  margin: 0 22px -8px auto !important;
+  padding: 0 34px 5px 42px !important;
+  position: relative !important;
+  z-index: 8 !important;
+  background: url("../../assets/bage/green.png") center / 100% 100% no-repeat !important;
+  overflow: visible !important;
+}
+
+.deck-title__text {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  color: var(--text-title-gold) !important;
+  font-family: var(--font-title) !important;
+  font-size: clamp(18px, 5.1vw, 25px) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Main two-column card block */
+.deck-title + .opened-card,
+.opened-card {
+  --card-w: clamp(148px, 39vw, 170px) !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+
+  width: min(100%, 362px) !important;
+  max-width: 362px !important;
+  margin: 0 auto 8px !important;
+  padding: 0 !important;
+
+  display: grid !important;
+  grid-template-columns: var(--card-w) minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 14px !important;
+  row-gap: 0 !important;
+  align-items: start !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.opened-card__preview {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.opened-card__preview .card-slot,
+.opened-card__preview .deck-card-wrap {
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+  --card-w: clamp(148px, 39vw, 170px) !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+  margin: 0 !important;
+}
+
+/* Stats on the right */
+.opened-card__info {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  max-width: none !important;
+  padding: 76px 0 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.opened-card__stat {
+  display: grid !important;
+  grid-template-columns: 18px minmax(0, 1fr) !important;
+  gap: 6px !important;
+  color: var(--text-main-parchment) !important;
+  font-family: var(--font-body) !important;
+  font-size: clamp(15px, 3.9vw, 18px) !important;
+  font-weight: 800 !important;
+  line-height: 1.05 !important;
+}
+
+.opened-card__stat img,
+.opened-card__level-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.opened-card__protection {
+  margin-top: 5px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--text-help-jade) !important;
+  font-family: var(--font-body) !important;
+  font-size: clamp(15px, 3.9vw, 17px) !important;
+  font-weight: 800 !important;
+  line-height: 1.05 !important;
+  white-space: nowrap !important;
+  text-align: left !important;
+}
+
+/* Upgrade / absorb buttons under card+info */
+.opened-card__preview-actions {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  width: min(250px, 100%) !important;
+  margin: 10px auto 0 !important;
+  display: grid !important;
+  gap: 6px !important;
+  justify-items: center !important;
+}
+
+.card-upgrade-button,
+.card-absorb-button {
+  width: 100% !important;
+  max-width: 250px !important;
+  height: 34px !important;
+  margin: 0 auto !important;
+  padding: 3px 16px 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+.card-upgrade-note,
+.card-absorb-note {
+  width: 100% !important;
+  max-width: 250px !important;
+  margin: 0 auto 4px !important;
+  color: var(--text-main-parchment) !important;
+  font-family: var(--font-body) !important;
+  font-size: 14px !important;
+  line-height: 1.05 !important;
+}
+
+.card-upgrade-note {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  text-align: center !important;
+}
+
+.card-absorb-note {
+  text-align: center !important;
+}
+
+.card-upgrade-note strong,
+.card-absorb-note strong {
+  color: #9dff00 !important;
+}
+
+/* Keep only the real progress separator */
+.opened-card .opened-card__progress,
+.opened-card > .opened-card__progress,
+.card-absorb-note::after {
+  display: none !important;
+}
+
+.opened-card__progress {
+  width: min(296px, 100%) !important;
+  height: 5px !important;
+  margin: 6px auto 4px !important;
+}
+
+/* Weak cards block: no huge empty spacer */
+.weak-section-title {
+  width: min(296px, 100%) !important;
+  min-height: 22px !important;
+  margin: 0 auto 4px !important;
+  padding: 0 !important;
+  color: var(--text-title-gold) !important;
+  font-family: var(--font-title) !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  line-height: 1.05 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+.deck-message {
+  width: min(296px, 100%) !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 auto 10px !important;
+  padding: 0 !important;
+  display: block !important;
+  color: var(--text-main-parchment) !important;
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* If weak card thumbnails exist, show compact scroll row */
+.weak-mini-grid,
+.opened-card ~ .weak-mini-grid {
+  --card-w: 68px !important;
+  --card-h: calc(var(--card-w) * 1.5) !important;
+  width: min(296px, 100%) !important;
+  max-width: 296px !important;
+  height: auto !important;
+  max-height: 122px !important;
+  margin: 0 auto 10px !important;
+  padding: 0 0 4px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, var(--card-w)) !important;
+  justify-content: center !important;
+  gap: 8px 14px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+}
+
+.weak-mini-grid::-webkit-scrollbar,
+.opened-card ~ .weak-mini-grid::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Bottom action rows */
+.deck-actions.deck-actions--open,
+.deck-actions:not(.deck-actions--open) {
+  width: min(340px, 100%) !important;
+  max-width: 340px !important;
+  margin: 4px auto 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  gap: 7px !important;
+}
+
+.deck-actions.deck-actions--open .row-button,
+.deck-actions:not(.deck-actions--open) .row-button {
+  width: 100% !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 12px 0 44px !important;
+  background-image: url("../../assets/button.png") !important;
+  background-size: 100% 122% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  font-size: clamp(17px, 4.5vw, 22px) !important;
+}
+
+/* Small screens */
+@media (max-width: 360px) {
+  .deck-panel {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .deck-title {
+    width: min(240px, calc(100vw - 130px)) !important;
+    margin-right: 12px !important;
+  }
+
+  .deck-title + .opened-card,
+  .opened-card {
+    --card-w: 126px !important;
+    gap: 10px !important;
+  }
+
+  .opened-card__info {
+    padding-top: 64px !important;
+  }
+
+  .opened-card__stat,
+  .opened-card__protection {
+    font-size: 14px !important;
+  }
+}
+
+/* =========================================
+   HOTFIX: bigger green badge + left button text
+   inserted at the very end of DeckScreen.css
+========================================= */
+
+/* 1) Bigger green badge at the top */
+.deck-title {
+  width: min(430px, calc(100% + 8px)) !important;
+  height: 78px !important;
+  min-height: 78px !important;
+  margin: 0 auto 12px !important;
+  padding: 0 56px 8px !important;
+  background-size: 100% 100% !important;
+}
+
+.deck-title__text {
+  font-size: clamp(18px, 4.9vw, 26px) !important;
+  line-height: 0.95 !important;
+  text-align: center !important;
+  justify-content: center !important;
+  align-items: center !important;
+  max-height: none !important;
+}
+
+/* 2) Gold and green buttons: text starts from the left */
+.card-upgrade-button,
+.card-absorb-button {
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding: 0 18px 2px 22px !important;
+}
+
+.card-upgrade-note,
+.card-absorb-note {
+  text-align: left !important;
+}
+
+/* 3) Bottom action buttons: text starts from the left */
+.deck-actions:not(.deck-actions--open) .row-button,
+.deck-actions.deck-actions--open .row-button,
+.deck-action-row {
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: 14px !important;
+}
+
+.row-button__title,
+.deck-action-row .row-button__title {
+  width: 100% !important;
+  text-align: left !important;
+  justify-self: start !important;
+  align-self: center !important;
+  padding-left: 6px !important;
+  padding-right: 8px !important;
+}
+
+@media (max-width: 360px) {
+  .deck-title {
+    height: 72px !important;
+    min-height: 72px !important;
+  }
+
+  .deck-title__text {
+    font-size: clamp(17px, 4.7vw, 22px) !important;
+  }
+
+  .card-upgrade-button,
+  .card-absorb-button {
+    padding-left: 18px !important;
+  }
+}
+
+/* =========================================
+   HOTFIX: HUD-width green badge + left transition text
+========================================= */
+
+.deck-title {
+  width: calc(100% + 56px) !important;
+  max-width: none !important;
+  margin-left: -28px !important;
+  margin-right: -28px !important;
+  box-sizing: border-box !important;
+}
+
+.deck-actions.deck-actions--open .row-button,
+.deck-actions:not(.deck-actions--open) .row-button {
+  display: grid !important;
+  grid-template-columns: 50px minmax(0, 1fr) 24px !important;
+  justify-items: stretch !important;
+  justify-content: stretch !important;
+  text-align: left !important;
+  padding: 0 12px 0 9px !important;
+}
+
+.deck-actions.deck-actions--open .row-button__title,
+.deck-actions:not(.deck-actions--open) .row-button__title {
+  grid-column: 2 !important;
+  width: 100% !important;
+  max-width: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  justify-self: stretch !important;
+  text-align: left !important;
+  padding: 0 8px 0 7px !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 360px) {
+  .deck-title {
+    width: calc(100% + 36px) !important;
+    margin-left: -18px !important;
+    margin-right: -18px !important;
+  }
+}
+
+/* HOTFIX: free non-jubilee upgrade state */
+.card-upgrade-button.card-upgrade-button--free {
+  width: min(310px, calc(100vw - 88px)) !important;
+  background: var(--deck-bt-green) center / 100% 100% no-repeat !important;
+  color: #eaffc2 !important;
+  font-size: clamp(15px, 4vw, 18px) !important;
+  text-shadow:
+    0 1px 0 #001600,
+    0 0 5px #000,
+    0 0 8px rgba(70, 255, 70, 0.35) !important;
+}
+
+.card-upgrade-note.card-upgrade-note--free {
+  grid-template-columns: 1fr !important;
+  width: min(310px, calc(100vw - 88px)) !important;
+}
+
+/* HOTFIX: center deck card grids inside asymmetric GameScreen insets */
+.deck-hint + .deck-grid,
+.deck-grid.deck-grid--weak {
+  --deck-grid-inset-balance: calc((var(--row-menu-inset-right, 58px) - var(--row-menu-inset-left, 24px)) / 2);
+  transform: translateX(var(--deck-grid-inset-balance)) !important;
+}
+
+@media (max-width: 380px) {
+  .deck-hint + .deck-grid,
+  .deck-grid.deck-grid--weak {
+    --deck-grid-inset-balance: 10px;
+  }
+}
+
+/* HOTFIX: keep the green deck title badge centered */
+.deck-panel > .deck-title {
+  width: calc(100% + var(--row-menu-inset-left, 24px) + var(--row-menu-inset-right, 58px)) !important;
+  max-width: none !important;
+  margin-left: calc(-1 * var(--row-menu-inset-left, 24px)) !important;
+  margin-right: calc(-1 * var(--row-menu-inset-right, 58px)) !important;
+  transform: none !important;
+}
+
+.deck-panel > .deck-title .deck-title__text {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  line-height: 0.95 !important;
+  font-size: clamp(16px, 5vw, 26px) !important;
+}

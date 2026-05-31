@@ -6,9 +6,9 @@ import guildIcon from '../../assets/botmenu/guild.png';
 import '../../styles/components/BottomNav.css';
 
 const TABS = [
-  { id: 'home', img: homeIcon, alt: 'Головна' },
-  { id: 'profile', img: profileIcon, alt: 'Профіль' },
-  { id: 'guild', img: guildIcon, alt: 'Гільдія' },
+  { id: 'home', img: homeIcon, label: 'Головна' },
+  { id: 'profile', img: profileIcon, label: 'Профіль' },
+  { id: 'guild', img: guildIcon, label: 'Гільдія' },
 ];
 
 function BottomNav() {
@@ -25,7 +25,8 @@ function BottomNav() {
             onClick={() => dispatch({ type: 'SET_TAB', payload: tab.id })}
             aria-current={isActive ? 'page' : undefined}
           >
-            <img src={tab.img} alt={tab.alt} draggable={false} />
+            <img src={tab.img} alt="" draggable={false} />
+            <span>{tab.label}</span>
           </button>
         );
       })}

@@ -6,7 +6,7 @@ import {
   getSameElementWeakCardsForTarget,
   withUpgradeIndicators,
 } from '../../engine/deckModel.js';
-import { getCardAvailableElements, getGoldUpgradeCost, getUpgradeProgress } from '../../engine/upgradeEngine.js';
+import { canFreeUpgrade, getCardAvailableElements, getGoldUpgradeCost, getUpgradeProgress } from '../../engine/upgradeEngine.js';
 import RowButton from '../ui/RowButton.jsx';
 import CardSlot, { ELEMENT_ICONS } from './CardSlot.jsx';
 import '../../styles/components/DeckScreen.css';
@@ -205,7 +205,12 @@ function OpenCardScreen({
     ? 100
     : Math.round((progress.ratio || 0) * 100);
   const powerGain = Math.max(1, Math.round((card.power || 0) * 0.03));
-  const absorbGain = (sameElementWeakCards || []).reduce((sum, w) => sum + getWeakCardUpgradePercent(card, w), 0);
+  const weakCards = sameElementWeakCards || [];
+  const hasWeakCards = weakCards.length > 0;
+  const isFreeUpgrade = canFreeUpgrade(card);
+  const canGoldUpgrade = !progress.isMax && progress.isGolden;
+  const canUpgrade = isFreeUpgrade || canGoldUpgrade;
+  const absorbGain = weakCards.reduce((sum, w) => sum + getWeakCardUpgradePercent(card, w), 0);
 
   return (
     <>
@@ -220,6 +225,42 @@ function OpenCardScreen({
             onUpgradeFree={onUpgradeFree}
             onUpgradeWithGold={onUpgradeWithGold}
           />
+        </div>
+
+        <div className="opened-card__preview-actions">
+          <div>
+            <button
+              className={`card-upgrade-button${isFreeUpgrade ? ' card-upgrade-button--free' : ''}`}
+              type="button"
+              onClick={() => {
+                if (isFreeUpgrade) {
+                  onUpgradeFree(card.id);
+                  return;
+                }
+                onUpgradeWithGold(card.id);
+              }}
+              disabled={!canUpgrade}
+            >
+              {isFreeUpgrade ? 'Прокачати безкоштовно' : 'Підняти рівень'}
+            </button>
+            <div className={`card-upgrade-note${isFreeUpgrade ? ' card-upgrade-note--free' : ''}`}>
+              <span>Сила: <strong>+{powerGain}</strong></span>
+              {canGoldUpgrade && <span>Ціна: <strong>{goldCost}</strong></span>}
+            </div>
+          </div>
+
+          {hasWeakCards && (
+            <div>
+              <button
+                className="card-absorb-button"
+                type="button"
+                onClick={() => onAbsorb(card.id, weakCards[0].id)}
+              >
+                зкормити
+              </button>
+              <div className="card-absorb-note">Прогрес рівня: <strong>+{absorbGain}%</strong></div>
+            </div>
+          )}
         </div>
 
         <div className="opened-card__info">
@@ -241,40 +282,6 @@ function OpenCardScreen({
             </button>
           </div>
 
-        </div>
-      </div>
-
-      {/* Upgrade block (moved below card info) */}
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div>
-          <button
-            className="card-upgrade-button"
-            type="button"
-            onClick={() => onUpgradeWithGold(card.id)}
-            disabled={progress.isMax}
-          >
-            Підняти рівень
-          </button>
-          <div className="card-upgrade-note">
-            <span>Сила: <strong>+{powerGain}</strong></span>
-            <span>Ціна: <strong>{goldCost}</strong></span>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div>
-          <button
-            className="card-absorb-button"
-            type="button"
-            onClick={() => {
-              if (sameElementWeakCards.length > 0) onAbsorb(card.id, sameElementWeakCards[0].id);
-            }}
-            disabled={sameElementWeakCards.length === 0}
-          >
-            зкормити
-          </button>
-          <div className="card-absorb-note">Прогрес рівня: <strong>+{absorbGain}%</strong></div>
         </div>
       </div>
 

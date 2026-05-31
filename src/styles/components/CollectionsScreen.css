@@ -14,23 +14,28 @@
 }
 
 .collections-title {
+  width: min(380px, 100%);
   height: 64px;
-  margin-bottom: 10px;
-  padding: 9px 32px;
+  min-height: 64px;
+  margin: 0 auto 10px;
+  padding: 0 48px 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: #e7ffbe;
+  color: var(--text-title-gold);
   font-family: var(--font-title);
-  font-size: 15px;
+  font-size: clamp(17px, 4.7vw, 21px);
   font-weight: 800;
   line-height: 1;
   text-align: center;
   background: url(../../assets/bage/green.png) center / 100% 100% no-repeat;
   border: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.75);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  box-shadow: none;
+  text-shadow:
+    0 1px 0 #082900,
+    0 2px 2px rgba(0, 0, 0, 0.9),
+    0 0 5px rgba(0, 0, 0, 0.9);
 }
 
 .collections-title span {
@@ -367,9 +372,19 @@
 }
 
 .collection-card-detail {
+  --card-w: clamp(170px, 56vw, 224px);
+  --card-h: calc(var(--card-w) * 1.5);
   display: grid;
   justify-items: center;
   gap: 12px;
+}
+
+.collection-card-detail__card {
+  width: var(--card-w);
+}
+
+.collection-card-detail__card--locked {
+  filter: grayscale(0.85) brightness(0.55);
 }
 
 .collections-title--card {
@@ -382,69 +397,6 @@
   object-fit: contain;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85));
   flex-shrink: 0;
-}
-
-/* ── Art blank ───────────────────────────────────────────────── */
-
-.card-art-blank {
-  --art-border: rgba(140, 200, 220, 0.55);
-  --art-glow: rgba(80, 160, 200, 0.18);
-
-  position: relative;
-  width: clamp(180px, 78vw, 290px);
-  aspect-ratio: 3 / 4;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  border: 1px solid var(--art-border);
-  background:
-    radial-gradient(ellipse at 50% 38%, var(--art-glow) 0%, transparent 62%),
-    linear-gradient(180deg, #0e1c26 0%, #060c10 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 0 22px var(--art-glow),
-    0 6px 24px rgba(0, 0, 0, 0.92);
-}
-
-.card-art-blank--air {
-  --art-border: rgba(120, 190, 255, 0.65);
-  --art-glow: rgba(90, 160, 255, 0.2);
-}
-
-.card-art-blank--water {
-  --art-border: rgba(50, 140, 255, 0.65);
-  --art-glow: rgba(30, 100, 255, 0.2);
-}
-
-.card-art-blank--fire {
-  --art-border: rgba(255, 120, 40, 0.65);
-  --art-glow: rgba(255, 80, 10, 0.2);
-}
-
-.card-art-blank--earth {
-  --art-border: rgba(90, 195, 70, 0.65);
-  --art-glow: rgba(60, 170, 30, 0.2);
-}
-
-.card-art-blank--locked {
-  filter: grayscale(0.85) brightness(0.52);
-}
-
-.card-art-blank__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-}
-
-.card-art-blank__placeholder {
-  width: 54%;
-  aspect-ratio: 1;
-  border: 1px solid rgba(120, 180, 200, 0.22);
-  background:
-    linear-gradient(135deg, transparent 0 46%, rgba(110, 170, 190, 0.18) 47% 53%, transparent 54%),
-    linear-gradient(45deg,  transparent 0 46%, rgba(110, 170, 190, 0.14) 47% 53%, transparent 54%);
-  opacity: 0.65;
 }
 
 .collection-card-detail__bio {
