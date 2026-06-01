@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Зброєносець I</title>
+  <desc id="desc">Зброєносець I, level I, medieval fantasy league emblem SVG.</desc>
+  <defs>
+    <linearGradient id="steel" x1="52" y1="24" x2="204" y2="232" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f1f1ea"/>
+      <stop offset="0.22" stop-color="#8f948c"/>
+      <stop offset="0.56" stop-color="#2b2f2f"/>
+      <stop offset="1" stop-color="#d7d3c6"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="48" y1="20" x2="210" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff2a8"/>
+      <stop offset="0.28" stop-color="#d6a62f"/>
+      <stop offset="0.62" stop-color="#7f4b11"/>
+      <stop offset="1" stop-color="#ffdf72"/>
+    </linearGradient>
+    <linearGradient id="darkSteel" x1="48" y1="20" x2="208" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7b7d7b"/>
+      <stop offset="0.34" stop-color="#272a2c"/>
+      <stop offset="0.7" stop-color="#060708"/>
+      <stop offset="1" stop-color="#a7a7a0"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="48" y1="20" x2="208" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.32" stop-color="#c5c7c4"/>
+      <stop offset="0.7" stop-color="#6a7070"/>
+      <stop offset="1" stop-color="#f4f1e9"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  
+
+  <g filter="url(#shadow)">
+    <path d="M128 22 L214 58 L202 160 Q190 214 128 238 Q66 214 54 160 L42 58 Z" fill="url(#steel)" stroke="#101313" stroke-width="3"/>
+    <path d="M128 36 L198 66 L188 156 Q178 200 128 222 Q78 200 68 156 L58 66 Z" fill="#224832" stroke="#111" stroke-width="2"/>
+    <path d="M128 45 L186 70 L178 150 Q170 190 128 210 Q86 190 78 150 L70 70 Z" fill="none" stroke="rgba(255,255,255,.32)" stroke-width="3"/>
+  
+    <path d="M51 104 C24 116 24 150 55 163" fill="none" stroke="url(#steel)" stroke-width="9" stroke-linecap="round"/>
+    <path d="M205 104 C232 116 232 150 201 163" fill="none" stroke="url(#steel)" stroke-width="9" stroke-linecap="round"/>
+
+    <path d="M72 184 C92 205 111 218 128 226 C145 218 164 205 184 184" fill="none" stroke="url(#gold)" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="128" cy="56" r="8" fill="url(#gold)" stroke="#2d1d08" stroke-width="2"/>
+</g>
+
+  <g transform="rotate(-36 118 135)">
+    <path d="M114.9 91.6 L118 71.75999999999999 L121.1 91.6 L119.86 159.8 H116.14 Z" fill="url(#silver)" stroke="#111" stroke-width="1.24"/>
+    <rect x="102.5" y="147.4" width="31.0" height="4.96" rx="1.24" fill="url(#silver)" stroke="#111" stroke-width="1.24"/>
+    <rect x="114.28" y="152.36" width="7.4399999999999995" height="14.879999999999999" rx="1.8599999999999999" fill="#3b2a18" stroke="#111" stroke-width="1.24"/>
+    <circle cx="118" cy="170.96" r="4.96" fill="url(#silver)" stroke="#111" stroke-width="1.24"/>
+  </g>
+
+  <path d="M96 90 L150 90 L150 153 L123 170 L96 153 Z" fill="#2c6a3c" stroke="#111" stroke-width="3"/>
+  <path d="M123 99 L137 128 L123 158 L109 128 Z" fill="#e6ece0" stroke="#111" stroke-width="2"/>
+<path d="M72 149 C96 133 160 133 184 149" fill="none" stroke="#2f7b43" stroke-width="10" stroke-linecap="round"/>
+  <g>
+    <path d="M78 194 C81 155 96 122 114 96" fill="none" stroke="#557a48" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="78" cy="178" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(-35 78 178)"/><ellipse cx="81" cy="163" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(-35 81 163)"/><ellipse cx="84" cy="148" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(-35 84 148)"/><ellipse cx="87" cy="133" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(-35 87 133)"/><ellipse cx="90" cy="118" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(-35 90 118)"/><ellipse cx="93" cy="103" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(-35 93 103)"/><ellipse cx="96" cy="88" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(-35 96 88)"/>
+  </g>
+
+  <g>
+    <path d="M178 194 C175 155 160 122 142 96" fill="none" stroke="#557a48" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="178" cy="178" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(35 178 178)"/><ellipse cx="175" cy="163" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(35 175 163)"/><ellipse cx="172" cy="148" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(35 172 148)"/><ellipse cx="169" cy="133" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(35 169 133)"/><ellipse cx="166" cy="118" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(35 166 118)"/><ellipse cx="163" cy="103" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(35 163 103)"/><ellipse cx="160" cy="88" rx="7" ry="16" fill="#557a48" stroke="#111" stroke-width="1.5" transform="rotate(35 160 88)"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M88 200 H168 L158 236 H98 Z" fill="#222" stroke="url(#steel)" stroke-width="5"/>
+    <text x="128" y="226" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="33" font-weight="700" fill="#f0eee4" stroke="#111" stroke-width="1">I</text>
+  </g>
+</svg>
