@@ -322,9 +322,11 @@ button.card-slot:active {
   position: absolute;
 
   left: 70.9492%;
-  top: 77.3906%;
+  top: 76.3906%;
   width: 22.5547%;
   height: 15.3698%;
+transform: scale(1.5);
+  transform-origin: center center;
 
   z-index: 25;
 

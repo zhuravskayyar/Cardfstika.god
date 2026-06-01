@@ -2057,7 +2057,7 @@
   overflow: visible;
 }
 
-/* Bottom nav scrolls with page like in bonus/original */
+/* Bottom nav uses the shared game-wide canon. */
 .bottom-nav,
 .game-bottom-nav,
 .shop-screen .bottom-nav,
@@ -2066,21 +2066,17 @@
 .main-screen .game-bottom-nav,
 .deck-screen .bottom-nav,
 .deck-screen .game-bottom-nav {
-  position: relative !important;
-
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: var(--bottom-nav-lift, -12px) !important;
   transform: none !important;
-
   width: 100%;
-  height: 96px;
-  min-height: 96px;
-  flex: 0 0 96px;
-
+  height: var(--bottom-nav-height, 150px);
+  min-height: var(--bottom-nav-height, 150px);
+  flex: 0 0 var(--bottom-nav-height, 150px);
   margin-top: 0;
-
-  z-index: 1;
+  z-index: 50;
   background-color: transparent !important;
 }
 
@@ -2224,31 +2220,33 @@ body,
   padding: 8px 44px 150px;
 }
 
-/* Bottom menu is part of scroll, not overlay */
+/* Bottom menu uses the shared game-wide canon. */
 .shop-screen .bottom-nav,
 .shop-screen .game-bottom-nav {
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: var(--bottom-nav-lift, -12px) !important;
   transform: none !important;
   width: 100%;
-  height: 96px;
-  flex: 0 0 96px;
-  z-index: 1;
+  height: var(--bottom-nav-height, 150px);
+  min-height: var(--bottom-nav-height, 150px);
+  flex: 0 0 var(--bottom-nav-height, 150px);
+  z-index: 50;
 }
 
 .bottom-nav,
 .game-bottom-nav {
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: var(--bottom-nav-lift, -12px) !important;
   transform: none !important;
   width: 100%;
-  height: 96px;
-  flex: 0 0 96px;
-  z-index: 1;
+  height: var(--bottom-nav-height, 150px);
+  min-height: var(--bottom-nav-height, 150px);
+  flex: 0 0 var(--bottom-nav-height, 150px);
+  z-index: 50;
 }
 
 /* === FIX: pack cards layout like original reference === */
@@ -2588,5 +2586,4 @@ body,
 /* Альтернативне тонке позиціонування (опціонально)
    .shop-items-list--packs .shop-pack-item__text { left: 94px; top: 17px; }
 */
-
 

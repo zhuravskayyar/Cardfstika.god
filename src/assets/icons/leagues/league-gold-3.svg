@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Паладин III</title>
+  <desc id="desc">Паладин III, level III, medieval fantasy league emblem SVG.</desc>
+  <defs>
+    <linearGradient id="steel" x1="52" y1="24" x2="204" y2="232" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f1f1ea"/>
+      <stop offset="0.22" stop-color="#8f948c"/>
+      <stop offset="0.56" stop-color="#2b2f2f"/>
+      <stop offset="1" stop-color="#d7d3c6"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="48" y1="20" x2="210" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff2a8"/>
+      <stop offset="0.28" stop-color="#d6a62f"/>
+      <stop offset="0.62" stop-color="#7f4b11"/>
+      <stop offset="1" stop-color="#ffdf72"/>
+    </linearGradient>
+    <linearGradient id="darkSteel" x1="48" y1="20" x2="208" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7b7d7b"/>
+      <stop offset="0.34" stop-color="#272a2c"/>
+      <stop offset="0.7" stop-color="#060708"/>
+      <stop offset="1" stop-color="#a7a7a0"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="48" y1="20" x2="208" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.32" stop-color="#c5c7c4"/>
+      <stop offset="0.7" stop-color="#6a7070"/>
+      <stop offset="1" stop-color="#f4f1e9"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  
+
+  <g filter="url(#shadow)">
+    <circle cx="128" cy="130" r="67" fill="#a66e16" stroke="url(#gold)" stroke-width="9"/>
+    <path d="M128 38 L139 91 L190 68 L161 114 L214 126 L161 142 L190 190 L139 166 L128 220 L117 166 L66 190 L95 142 L42 126 L95 114 L66 68 L117 91 Z"
+          fill="none" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+<path d="M96 148 C70 130 74 176 104 188 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M83 140 C56 120 62 171 97 186 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M70 132 C42 110 50 166 90 184 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M57 124 C28 100 38 161 83 182 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M44 116 C14 90 26 156 76 180 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M160 148 C186 130 182 176 152 188 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M173 140 C200 120 194 171 159 186 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M186 132 C214 110 206 166 166 184 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M199 124 C228 100 218 161 173 182 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+<path d="M212 116 C242 90 230 156 180 180 Z" fill="url(#silver)" stroke="#111" stroke-width="2"/>
+  <path d="M122.42 99.0 H133.58 V123.8 H154.04 V134.96 H133.58 V163.48 H122.42 V134.96 H101.96000000000001 V123.8 H122.42 Z"
+        fill="#fff7d7" stroke="#5a3508" stroke-width="1.8599999999999999" stroke-linejoin="round"/>
+
+  <g filter="url(#shadow)">
+    <path d="M88 200 H168 L158 236 H98 Z" fill="#6b4a0f" stroke="url(#steel)" stroke-width="5"/>
+    <text x="128" y="226" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="33" font-weight="700" fill="#f0eee4" stroke="#111" stroke-width="1">III</text>
+  </g>
+</svg>

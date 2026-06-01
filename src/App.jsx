@@ -35,6 +35,9 @@ export default function App() {
     collectionCardDetail: <CollectionsScreen />,
     shop: <ShopScreen />,
     duel: <DuelScreen />,
+    duelSearch: <DuelScreen />,
+    duelBattle: <DuelScreen />,
+    duelResult: <DuelScreen />,
     settings: <SettingsScreen />,
     ...Object.fromEntries(
       Object.entries(PLACEHOLDER_TABS).map(([id, title]) => [

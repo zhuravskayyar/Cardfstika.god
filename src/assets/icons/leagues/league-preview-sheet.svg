@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="2135" viewBox="0 0 780 2135">
+  <rect width="100%" height="100%" fill="#5a5a5a"/>
+  <style>
+    text { font-family: Georgia, "Times New Roman", serif; fill: #f3eee4; font-size: 23px; text-anchor: middle; }
+    .sub { font-size: 15px; fill: #d9d3c6; }
+  </style>
+  <g transform="translate(2,0)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-gray-3.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Послушник III</text>
+    <text class="sub" x="130" y="280">league-gray-3.svg</text>
+  </g>
+  <g transform="translate(262,0)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-gray-2.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Послушник II</text>
+    <text class="sub" x="130" y="280">league-gray-2.svg</text>
+  </g>
+  <g transform="translate(522,0)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-gray-1.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Послушник I</text>
+    <text class="sub" x="130" y="280">league-gray-1.svg</text>
+  </g>
+  <g transform="translate(2,305)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-green-3.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Зброєносець III</text>
+    <text class="sub" x="130" y="280">league-green-3.svg</text>
+  </g>
+  <g transform="translate(262,305)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-green-2.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Зброєносець II</text>
+    <text class="sub" x="130" y="280">league-green-2.svg</text>
+  </g>
+  <g transform="translate(522,305)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-green-1.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Зброєносець I</text>
+    <text class="sub" x="130" y="280">league-green-1.svg</text>
+  </g>
+  <g transform="translate(2,610)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-blue-3.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Лицар III</text>
+    <text class="sub" x="130" y="280">league-blue-3.svg</text>
+  </g>
+  <g transform="translate(262,610)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-blue-2.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Лицар II</text>
+    <text class="sub" x="130" y="280">league-blue-2.svg</text>
+  </g>
+  <g transform="translate(522,610)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-blue-1.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Лицар I</text>
+    <text class="sub" x="130" y="280">league-blue-1.svg</text>
+  </g>
+  <g transform="translate(2,915)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-purple-3.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Командор III</text>
+    <text class="sub" x="130" y="280">league-purple-3.svg</text>
+  </g>
+  <g transform="translate(262,915)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-purple-2.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Командор II</text>
+    <text class="sub" x="130" y="280">league-purple-2.svg</text>
+  </g>
+  <g transform="translate(522,915)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-purple-1.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Командор I</text>
+    <text class="sub" x="130" y="280">league-purple-1.svg</text>
+  </g>
+  <g transform="translate(2,1220)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-gold-3.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Паладин III</text>
+    <text class="sub" x="130" y="280">league-gold-3.svg</text>
+  </g>
+  <g transform="translate(262,1220)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-gold-2.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Паладин II</text>
+    <text class="sub" x="130" y="280">league-gold-2.svg</text>
+  </g>
+  <g transform="translate(522,1220)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-gold-1.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Паладин I</text>
+    <text class="sub" x="130" y="280">league-gold-1.svg</text>
+  </g>
+  <g transform="translate(2,1525)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-black-3.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Інквізитор III</text>
+    <text class="sub" x="130" y="280">league-black-3.svg</text>
+  </g>
+  <g transform="translate(262,1525)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-black-2.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Інквізитор II</text>
+    <text class="sub" x="130" y="280">league-black-2.svg</text>
+  </g>
+  <g transform="translate(522,1525)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-black-1.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Інквізитор I</text>
+    <text class="sub" x="130" y="280">league-black-1.svg</text>
+  </g>
+  <g transform="translate(2,1830)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-masters-3.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Магістр Ордену III</text>
+    <text class="sub" x="130" y="280">league-masters-3.svg</text>
+  </g>
+  <g transform="translate(262,1830)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-masters-2.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Магістр Ордену II</text>
+    <text class="sub" x="130" y="280">league-masters-2.svg</text>
+  </g>
+  <g transform="translate(522,1830)">
+    <rect x="10" y="10" width="240" height="285" rx="18" fill="#454545" stroke="#777" stroke-width="2"/>
+    <image href="league-masters-1.svg" x="24" y="20" width="212" height="212"/>
+    <text x="130" y="258">Магістр Ордену I</text>
+    <text class="sub" x="130" y="280">league-masters-1.svg</text>
+  </g>
+</svg>

@@ -8,13 +8,14 @@ const BUTTON_IMAGES = {
   secondary: blueButton,
 };
 
-export default function DuelButton({ title, onClick, variant = 'primary' }) {
+export default function DuelButton({ title, onClick, variant = 'primary', disabled = false }) {
   return (
     <button
       className={`duel-button duel-button--${variant}`}
       onClick={onClick}
       style={{ '--duel-button-image': `url(${BUTTON_IMAGES[variant] ?? greenButton})` }}
       aria-label={title}
+      disabled={disabled}
       type="button"
     >
       <span className="duel-button__label">{title}</span>

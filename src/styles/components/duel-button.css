@@ -22,6 +22,16 @@
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.75));
 }
 
+.duel-button:disabled {
+  cursor: default;
+  opacity: 0.58;
+  filter: grayscale(0.45) brightness(0.72) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.75));
+}
+
+.duel-button:disabled:active {
+  transform: none;
+}
+
 .duel-button__label {
   max-width: none;
   overflow: visible;

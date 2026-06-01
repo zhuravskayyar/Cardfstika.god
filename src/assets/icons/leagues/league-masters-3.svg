@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Магістр Ордену III</title>
+  <desc id="desc">Магістр Ордену III, level III, medieval fantasy league emblem SVG.</desc>
+  <defs>
+    <linearGradient id="steel" x1="52" y1="24" x2="204" y2="232" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f1f1ea"/>
+      <stop offset="0.22" stop-color="#8f948c"/>
+      <stop offset="0.56" stop-color="#2b2f2f"/>
+      <stop offset="1" stop-color="#d7d3c6"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="48" y1="20" x2="210" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff2a8"/>
+      <stop offset="0.28" stop-color="#d6a62f"/>
+      <stop offset="0.62" stop-color="#7f4b11"/>
+      <stop offset="1" stop-color="#ffdf72"/>
+    </linearGradient>
+    <linearGradient id="darkSteel" x1="48" y1="20" x2="208" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7b7d7b"/>
+      <stop offset="0.34" stop-color="#272a2c"/>
+      <stop offset="0.7" stop-color="#060708"/>
+      <stop offset="1" stop-color="#a7a7a0"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="48" y1="20" x2="208" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.32" stop-color="#c5c7c4"/>
+      <stop offset="0.7" stop-color="#6a7070"/>
+      <stop offset="1" stop-color="#f4f1e9"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  
+
+  <g filter="url(#shadow)">
+    <circle cx="128" cy="120" r="66" fill="#e8edf2" stroke="url(#silver)" stroke-width="10"/>
+    <path d="M128 28 L144 76 L194 62 L172 107 L218 132 L168 142 L182 192 L136 168 L100 204 L98 153 L48 145 L92 118 L70 72 L118 82 Z"
+          fill="none" stroke="url(#silver)" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+
+  <path d="M122.78 91.0 H133.22 V114.2 H152.36 V124.64 H133.22 V151.32 H122.78 V124.64 H103.64 V114.2 H122.78 Z"
+        fill="#dff3ff" stroke="#23384a" stroke-width="1.7399999999999998" stroke-linejoin="round"/>
+
+  <path d="M82 184 Q128 166 174 184 V216 Q128 198 82 216 Z" fill="#f0eee6" stroke="#222" stroke-width="4"/>
+  <path d="M128 170 V204" stroke="#6e6e6e" stroke-width="3"/>
+
+  <g filter="url(#shadow)">
+    <path d="M88 200 H168 L158 236 H98 Z" fill="#222" stroke="url(#steel)" stroke-width="5"/>
+    <text x="128" y="226" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="33" font-weight="700" fill="#f0eee4" stroke="#111" stroke-width="1">III</text>
+  </g>
+</svg>

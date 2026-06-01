@@ -1,7 +1,6 @@
 .game-screen {
-  --bottom-nav-height: 88px;
-  --grid-menu-height: clamp(250px, 34dvh, 300px);
-  --list-menu-height: clamp(206px, 28dvh, 246px);
+  --grid-menu-height: clamp(238px, 30dvh, 292px);
+  --list-menu-height: clamp(276px, 34dvh, 328px);
   --row-menu-inset-left: 24px;
   --row-menu-inset-right: 58px;
 
@@ -25,18 +24,20 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-bottom: var(--bottom-nav-height);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-lift));
+  box-sizing: border-box;
 }
 
 .game-screen__content--home {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .home-screen {
-  --grid-menu-height: clamp(258px, 35dvh, 306px);
-  --list-menu-height: clamp(205px, 27dvh, 236px);
-  --row-menu-inset-left: clamp(18px, 5vw, 24px);
-  --row-menu-inset-right: clamp(18px, 5vw, 24px);
+  --grid-menu-height: clamp(238px, 30dvh, 292px);
+  --list-menu-height: clamp(276px, 34dvh, 328px);
+  --row-menu-inset-left: clamp(22px, 6vw, 28px);
+  --row-menu-inset-right: clamp(22px, 6vw, 28px);
 
   flex: 1 1 auto;
   min-height: 0;
@@ -44,9 +45,18 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: clamp(8px, 1.2dvh, 12px);
-  padding-top: clamp(6px, 1dvh, 10px);
+  gap: clamp(8px, 1.1dvh, 12px);
+  padding-top: clamp(8px, 1.2dvh, 12px);
   box-sizing: border-box;
+}
+
+@media (max-height: 720px) {
+  .home-screen {
+    --grid-menu-height: 218px;
+    --list-menu-height: 246px;
+    gap: 6px;
+    padding-top: 6px;
+  }
 }
 
 .menu-spacer {

@@ -2,9 +2,10 @@
  * Форматує число у скорочений вигляд: 34880 → "34.88K", 1000000 → "1M"
  */
 export function formatNumber(n) {
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(2).replace(/\.?0+$/, '') + 'M';
-  if (n >= 1_000)     return (n / 1_000).toFixed(2).replace(/\.?0+$/, '') + 'K';
-  return n.toLocaleString('uk-UA');
+  const value = Number(n) || 0;
+  if (value >= 1_000_000) return (value / 1_000_000).toFixed(2).replace(/\.?0+$/, '') + 'M';
+  if (value >= 1_000) return (value / 1_000).toFixed(2).replace(/\.?0+$/, '') + 'K';
+  return value.toLocaleString('uk-UA');
 }
 
 /**

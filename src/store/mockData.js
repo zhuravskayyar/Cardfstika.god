@@ -20,11 +20,11 @@ export const initialState = {
     { id: 'tournament', title: 'Турнір', stat: '', icon: 'tournament', iconColor: '#a0a0a0', gradient: 'tour' },
     { id: 'arena', title: 'Арена', stat: '', icon: 'arena', iconColor: '#a0a0a0', gradient: 'arena' },
     { id: 'deck', title: 'Колода', stat: '', icon: 'deck', iconColor: '#2ecc71', gradient: 'deck' },
-    { id: 'invasion', title: 'Нашестя', stat: '', icon: 'invasion', iconColor: '#ff4500', gradient: 'invasion' },
+    { id: 'invasion', title: 'Епос', stat: '', icon: 'invasion', iconColor: '#ff4500', gradient: 'invasion' },
   ],
   listItems: [
     { id: 'tasks', title: 'Завдання', icon: 'tasks', iconColor: '#00ff00', hasDot: false },
-    { id: 'diamonds', title: 'Алмазні нагороди', icon: 'diamonds', iconColor: '#00d2ff', hasDot: false },
+    { id: 'diamonds', title: 'Ритуалка', icon: 'diamonds', iconColor: '#00d2ff', hasDot: false },
     { id: 'equipment', title: 'Спорядження', icon: 'equipment', iconColor: '#b7b1a2', hasDot: false },
     { id: 'collections', title: 'Колекції', icon: 'collections', iconColor: '#f2c94c', hasDot: false },
     { id: 'best', title: 'Кращі', icon: 'best', iconColor: '#ffd700', hasDot: false },

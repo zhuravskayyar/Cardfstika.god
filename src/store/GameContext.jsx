@@ -3,7 +3,17 @@ import { accountToGameState, gameStateToAccount, loadInitialGameState, saveAccou
 import { logoutLocal } from './authAdapter.js';
 import { loadUiState, saveUiState } from './uiStorage.js';
 import { CARDS } from '../data/cards.js';
-import { buildWeakDeckCards, normalizeOwnedCards, getDeckPowerFromOwnedCards } from '../engine/deckModel.js';
+import { buildBattleDeckCards, buildWeakDeckCards, normalizeOwnedCards, getDeckPowerFromOwnedCards } from '../engine/deckModel.js';
+import { attackLane, createDuelBattle, createDuelOpponent } from '../engine/duelEngine.js';
+import {
+  applyDuelBattleResultToState,
+  applyTechnicalLossIfExpired,
+  consumeDuelStart,
+  grantExtraDuelForGoldUpgrade,
+  openDuelsWithGold,
+  refreshDuelAvailability,
+  runAutoDuels,
+} from '../engine/duelProgression.js';
 import { getCardPower } from '../engine/powerEngine.js';
 import {
   canFreeUpgrade,
@@ -88,6 +98,16 @@ function loadInitialState() {
   };
 }
 
+function emptyDuelSession(message = null) {
+  return {
+    phase: 'search',
+    enemy: null,
+    battle: null,
+    result: null,
+    message,
+  };
+}
+
 function gameReducer(state, action) {
   switch (action.type) {
     case 'UPDATE_GOLD':
@@ -139,6 +159,191 @@ function gameReducer(state, action) {
         activeTab: 'collectionDetail',
         selectedCardId: null,
       });
+    case 'DUEL_FIND_ENEMY': {
+      const playerDeck = buildBattleDeckCards(state);
+      const enemy = createDuelOpponent(playerDeck);
+      const refreshed = refreshDuelAvailability(state);
+      const playerPower = getDeckPowerFromOwnedCards(playerDeck);
+      const strongEnemyStreak = enemy.power > playerPower
+        ? (Number(refreshed.duel?.strongEnemyStreak) || 0) + 1
+        : 0;
+      return withPersistedAccount({
+        ...refreshed,
+        duel: {
+          ...refreshed.duel,
+          strongEnemyStreak,
+        },
+        activeTab: 'duel',
+        duelSession: {
+          phase: 'found',
+          enemy,
+          battle: null,
+          result: null,
+          message: null,
+        },
+      });
+    }
+    case 'DUEL_START_BATTLE': {
+      const playerDeck = buildBattleDeckCards(state);
+      const enemy = state.duelSession?.enemy ?? createDuelOpponent(playerDeck);
+      const consumed = consumeDuelStart(state);
+      if (!consumed.ok) {
+        return withPersistedAccount({
+          ...consumed.state,
+          activeTab: 'duel',
+          duelSession: {
+            phase: state.duelSession?.phase === 'found' ? 'found' : 'search',
+            enemy,
+            battle: null,
+            result: null,
+            message: 'Доступні дуелі закінчилися. Відкрий дуелі за золото або запусти автобій.',
+          },
+        });
+      }
+
+      try {
+        return withPersistedAccount({
+          ...consumed.state,
+          activeTab: 'duel',
+          duelSession: {
+            phase: 'battle',
+            enemy,
+            battle: createDuelBattle(playerDeck, enemy.deck),
+            result: null,
+            message: null,
+          },
+        });
+      } catch {
+        return withPersistedAccount({
+          ...consumed.state,
+          activeTab: 'duel',
+          duelSession: {
+            phase: 'found',
+            enemy,
+            battle: null,
+            result: null,
+            message: 'Бій не стартував: потрібно щонайменше 3 карти з кожного боку.',
+          },
+        });
+      }
+    }
+    case 'DUEL_ATTACK_LANE': {
+      const session = state.duelSession;
+      if (session?.phase !== 'battle' || !session.battle) return state;
+
+      const timeout = applyTechnicalLossIfExpired(state, session);
+      if (timeout.expired) {
+        return withPersistedAccount({
+          ...timeout.state,
+          activeTab: 'duel',
+          duelSession: {
+            ...session,
+            phase: 'result',
+            battle: timeout.battle,
+            result: timeout.summary,
+            message: 'Дуель завершена технічною поразкою через 30 хвилин без активності.',
+          },
+        });
+      }
+
+      const activeState = {
+        ...timeout.state,
+        duel: {
+          ...timeout.state.duel,
+          lastActivityAt: Date.now(),
+        },
+      };
+      const battle = attackLane(session.battle, action.payload?.laneIndex ?? action.payload);
+      if (!battle?.finished) {
+        return withPersistedAccount({
+          ...activeState,
+          duelSession: {
+            ...session,
+            battle,
+          },
+        });
+      }
+
+      const applied = applyDuelBattleResultToState(activeState, battle);
+      return withPersistedAccount({
+        ...applied.state,
+        activeTab: 'duel',
+        duelSession: {
+          ...session,
+          phase: 'result',
+          battle,
+          result: applied.summary,
+          message: null,
+        },
+      });
+    }
+    case 'DUEL_OPEN_WITH_GOLD': {
+      const opened = openDuelsWithGold(state);
+      return withPersistedAccount({
+        ...opened.state,
+        activeTab: 'duel',
+        duelSession: {
+          ...(state.duelSession ?? emptyDuelSession()),
+          phase: opened.ok ? 'search' : (state.duelSession?.phase ?? 'search'),
+          battle: null,
+          result: null,
+          message: opened.ok
+            ? `Дуелі відкрито за ${opened.cost} золота.`
+            : `Не вистачає золота: потрібно ${opened.cost}.`,
+        },
+      });
+    }
+    case 'DUEL_AUTO_RUN': {
+      const playerDeck = buildBattleDeckCards(state);
+      try {
+        const auto = runAutoDuels(state, playerDeck, action.payload?.count ?? 10);
+        return withPersistedAccount({
+          ...auto.state,
+          activeTab: 'duel',
+          duelSession: {
+            phase: 'result',
+            enemy: null,
+            battle: null,
+            result: auto.summary
+              ? { result: auto.summary.losses > auto.summary.wins ? 'lose' : 'win', auto: auto.summary }
+              : null,
+            message: auto.ok
+              ? `Автобій завершено: перемог ${auto.summary.wins} з ${auto.summary.battles}.`
+              : `Автобій недоступний: потрібно ${auto.cost} золота.`,
+          },
+        });
+      } catch {
+        return {
+          ...state,
+          duelSession: {
+            ...(state.duelSession ?? emptyDuelSession()),
+            message: 'Автобій не стартував: потрібно щонайменше 3 карти з кожного боку.',
+          },
+        };
+      }
+    }
+    case 'DUEL_CHECK_TIMEOUT': {
+      const session = state.duelSession;
+      const timeout = applyTechnicalLossIfExpired(state, session);
+      if (!timeout.expired) return timeout.state;
+      return withPersistedAccount({
+        ...timeout.state,
+        activeTab: 'duel',
+        duelSession: {
+          ...session,
+          phase: 'result',
+          battle: timeout.battle,
+          result: timeout.summary,
+          message: 'Дуель завершена технічною поразкою через 30 хвилин без активності.',
+        },
+      });
+    }
+    case 'DUEL_RESET':
+      return {
+        ...state,
+        activeTab: 'duel',
+        duelSession: emptyDuelSession(),
+      };
     case 'SET_TAB':
       return withPersistedUi({
         ...state,
@@ -236,7 +441,7 @@ function gameReducer(state, action) {
           upgradeProgressElements: 0,
         });
       });
-      return withPersistedAccount({
+      const upgradedState = {
         ...state,
         ownedCards,
         player: {
@@ -244,17 +449,18 @@ function gameReducer(state, action) {
           gold: (Number(state.player?.gold) || 0) - cost,
           power: recalculatePlayerPower(state, ownedCards),
         },
-      });
+      };
+      return withPersistedAccount(grantExtraDuelForGoldUpgrade(upgradedState));
     }
     case 'SHOP_PURCHASE': {
       const p = action.payload;
       return withPersistedAccount({
         ...state,
-        player:         p.player         ?? state.player,
-        ownedCards:     p.ownedCards     ?? state.ownedCards,
+        player: p.player ?? state.player,
+        ownedCards: p.ownedCards ?? state.ownedCards,
         purchaseCounts: p.purchaseCounts ?? state.purchaseCounts,
         shopCardChances: p.shopCardChances ?? state.shopCardChances,
-        boosters:       p.boosters       ?? state.boosters,
+        boosters: p.boosters ?? state.boosters,
         ownedCosmetics: p.ownedCosmetics ?? state.ownedCosmetics,
       });
     }

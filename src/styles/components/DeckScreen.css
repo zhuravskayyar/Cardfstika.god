@@ -2299,3 +2299,39 @@
   line-height: 0.95 !important;
   font-size: clamp(16px, 5vw, 26px) !important;
 }
+
+/* Keep deck content fully scrollable above the enlarged bottom menu. */
+.deck-panel {
+  padding-bottom: calc(var(--bottom-nav-height, 150px) + var(--bottom-nav-lift, -12px) + 24px) !important;
+}
+
+/* FINAL: center upgrade button text, keep deck routing rows left-aligned. */
+.card-upgrade-button,
+.card-upgrade-button.card-upgrade-button--free {
+  justify-content: center !important;
+  text-align: center !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+}
+
+.deck-actions.deck-actions--open .row-button,
+.deck-actions:not(.deck-actions--open) .row-button {
+  grid-template-columns: minmax(0, 1fr) !important;
+  padding: 0 34px 0 18px !important;
+  text-align: left !important;
+}
+
+.deck-actions.deck-actions--open .row-button__icon-box,
+.deck-actions:not(.deck-actions--open) .row-button__icon-box {
+  display: none !important;
+}
+
+.deck-actions.deck-actions--open .row-button__title,
+.deck-actions:not(.deck-actions--open) .row-button__title {
+  grid-column: 1 !important;
+  width: 100% !important;
+  justify-content: flex-start !important;
+  justify-self: stretch !important;
+  text-align: left !important;
+  padding: 0 !important;
+}

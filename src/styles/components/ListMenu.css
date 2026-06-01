@@ -5,8 +5,8 @@
   min-height: 0;
   width: 100%;
   max-width: 425px;
-  padding: 0 var(--row-menu-inset-right) 0 var(--row-menu-inset-left);
-  gap: 3px;
+  padding: clamp(4px, 0.7dvh, 8px) var(--row-menu-inset-right) 0 var(--row-menu-inset-left);
+  gap: clamp(5px, 0.8dvh, 7px);
   box-sizing: border-box;
 }
 
@@ -14,5 +14,13 @@
   align-self: stretch;
   justify-content: flex-start;
   margin: 0 auto;
-  padding-top: 0;
+  padding-top: clamp(4px, 0.7dvh, 8px);
+}
+
+@media (max-height: 720px) {
+  .list-menu,
+  .home-screen .list-menu {
+    gap: 5px;
+    padding-top: 4px;
+  }
 }

@@ -52,6 +52,12 @@
   --radius-lg:      16px;
   --topbar-h:       56px;
   --bottomnav-h:    60px;
+  --bottom-nav-height: 150px;
+  --bottom-nav-lift: -12px;
+  --bottom-nav-tab-height: 138px;
+  --bottom-nav-icon-width: 116px;
+  --bottom-nav-icon-height: 104px;
+  --bottom-nav-label-size: 18px;
 
   /* Анімації */
   --transition-fast: 0.1s ease;

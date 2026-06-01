@@ -3,9 +3,12 @@ import { cards } from '../data/cards.js';
 import { collections } from '../data/collections.js';
 import { getDeckPowerFromOwnedCards } from '../engine/deckModel.js';
 import { getCardPower } from '../engine/powerEngine.js';
+import { DUEL_LEAGUE_DEFAULT_ID, getDuelLeagueByRating, normalizeDuelLeagueId } from '../data/duelLeagues.js';
+import { getLevelProgressFromTotalXp } from '../engine/experienceEngine.js';
+import { normalizeDuelStats } from '../engine/duelProgression.js';
 
 export const ACCOUNT_STORAGE_KEY = 'cardastika:account';
-export const ACCOUNT_SCHEMA_VERSION = 3;
+export const ACCOUNT_SCHEMA_VERSION = 4;
 export const STARTER_CARD_POWER = 10;
 export const DEFAULT_ACCOUNT_NAME = 'Гравець';
 
@@ -19,6 +22,27 @@ const DEFAULT_PLAYER = Object.freeze({
   gems: 0,
   stars: 0,
   power: STARTER_CARDS.length * STARTER_CARD_POWER,
+});
+
+const DEFAULT_DUEL = Object.freeze({
+  rating: 0,
+  played: 0,
+  wins: 0,
+  losses: 0,
+  draws: 0,
+  dailyGold: 0,
+  dailyGoldDate: '',
+  goldPity: 0,
+  dailyPlayed: 0,
+  dailyPlayedDate: '',
+  promoLeaguesClaimed: [],
+  availableDuels: 10,
+  cooldownStartedAt: 0,
+  cooldownEndsAt: 0,
+  lastActivityAt: 0,
+  autoBattlesToday: 0,
+  autoBattleDate: '',
+  strongEnemyStreak: 0,
 });
 
 const DEFAULT_PROFILE = Object.freeze({
@@ -51,11 +75,11 @@ const UI_STATE = Object.freeze({
     { id: 'tournament', title: 'Турнір', stat: '', icon: 'tournament', iconColor: '#a0a0a0', gradient: 'tour' },
     { id: 'arena', title: 'Арена', stat: '', icon: 'arena', iconColor: '#a0a0a0', gradient: 'arena' },
     { id: 'deck', title: 'Колода', stat: '', icon: 'deck', iconColor: '#2ecc71', gradient: 'deck' },
-    { id: 'invasion', title: 'Нашестя', stat: '', icon: 'invasion', iconColor: '#ff4500', gradient: 'invasion' },
+    { id: 'invasion', title: 'Епос', stat: '', icon: 'invasion', iconColor: '#ff4500', gradient: 'invasion' },
   ],
   listItems: [
     { id: 'tasks', title: 'Завдання', icon: 'tasks', iconColor: '#00ff00', hasDot: false },
-    { id: 'diamonds', title: 'Алмазні нагороди', icon: 'diamonds', iconColor: '#00d2ff', hasDot: false },
+    { id: 'diamonds', title: 'Ритуалка', icon: 'diamonds', iconColor: '#00d2ff', hasDot: false },
     { id: 'equipment', title: 'Спорядження', icon: 'equipment', iconColor: '#b7b1a2', hasDot: false },
     { id: 'collections', title: 'Колекції', icon: 'collections', iconColor: '#f2c94c', hasDot: false },
     { id: 'best', title: 'Кращі', icon: 'best', iconColor: '#ffd700', hasDot: false },
@@ -87,6 +111,12 @@ function canUseStorage() {
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function asNonNegativeInt(value, fallback = 0) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.max(0, Math.round(number));
 }
 
 function normalizeBirthDate(raw) {
@@ -159,6 +189,12 @@ export function createDefaultAccount() {
     createdAt: new Date().toISOString(),
     isAuthenticated: false,
     credentials: clone(DEFAULT_CREDENTIALS),
+    xpTotal: 0,
+    duelLeagueId: DUEL_LEAGUE_DEFAULT_ID,
+    duel: clone(DEFAULT_DUEL),
+    bonuses: {},
+    medals: [],
+    titles: [],
     player: clone(DEFAULT_PLAYER),
     profile: clone(DEFAULT_PROFILE),
     ownedCards: STARTER_CARDS.map((card) => ({
@@ -237,6 +273,11 @@ export function normalizeAccount(rawAccount) {
   const ownedCards = Array.isArray(account.ownedCards)
     ? recalculateOwnedCards(account.ownedCards.filter((card) => card?.cardId))
     : [];
+  const normalizedLeagueId = normalizeDuelLeagueId(account.duelLeagueId);
+  const duel = normalizeDuelStats(account.duel ?? clone(DEFAULT_DUEL), normalizedLeagueId);
+  const duelLeagueId = getDuelLeagueByRating(duel.rating).id;
+  const xpTotal = asNonNegativeInt(account.xpTotal ?? account.player?.xpTotal, 0);
+  const progress = getLevelProgressFromTotalXp(xpTotal);
 
   return {
     ...account,
@@ -244,6 +285,12 @@ export function normalizeAccount(rawAccount) {
     id: String(account.id || newAccountId()),
     createdAt: account.createdAt || new Date().toISOString(),
     isAuthenticated: Boolean(account.isAuthenticated && credentialName && account.credentials?.passwordHash),
+    xpTotal,
+    duelLeagueId,
+    duel,
+    bonuses: account.bonuses && typeof account.bonuses === 'object' ? account.bonuses : {},
+    medals: Array.isArray(account.medals) ? account.medals : [],
+    titles: Array.isArray(account.titles) ? account.titles : [],
     credentials: {
       username: credentialName,
       passwordHash: String(account.credentials?.passwordHash ?? ''),
@@ -252,6 +299,9 @@ export function normalizeAccount(rawAccount) {
       ...clone(DEFAULT_PLAYER),
       ...(account.player && typeof account.player === 'object' ? account.player : {}),
       power: getDeckPowerFromOwnedCards(ownedCards),
+      level: progress.level,
+      exp: progress.xpIntoLevel,
+      expToNext: progress.xpForNextLevel ?? Math.max(1, progress.xpIntoLevel),
       name: profileName,
     },
     profile: {
@@ -287,6 +337,12 @@ export function accountToGameState(accountLike) {
     createdAt: account.createdAt,
     isAuthenticated: account.isAuthenticated,
     credentials: account.credentials,
+    xpTotal: account.xpTotal,
+    duelLeagueId: account.duelLeagueId,
+    duel: account.duel,
+    bonuses: account.bonuses,
+    medals: account.medals,
+    titles: account.titles,
     profile: account.profile,
     player: {
       ...account.player,
@@ -300,6 +356,13 @@ export function accountToGameState(accountLike) {
     shopCardChances: account.shopCardChances,
     boosters: account.boosters,
     ownedCosmetics: account.ownedCosmetics,
+    duelSession: {
+      phase: 'search',
+      enemy: null,
+      battle: null,
+      result: null,
+      message: null,
+    },
   };
 }
 
@@ -311,6 +374,12 @@ export function gameStateToAccount(state) {
     createdAt: current.createdAt,
     isAuthenticated: current.isAuthenticated,
     credentials: current.credentials,
+    xpTotal: current.xpTotal,
+    duelLeagueId: current.duelLeagueId,
+    duel: current.duel,
+    bonuses: current.bonuses,
+    medals: current.medals,
+    titles: current.titles,
     player: current.player,
     profile: current.profile,
     ownedCards: current.ownedCards,

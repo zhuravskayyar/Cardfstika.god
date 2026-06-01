@@ -1,6 +1,6 @@
 .bottom-nav {
   position: absolute;
-  bottom: 0;
+  bottom: var(--bottom-nav-lift, -12px);
   left: 0;
   right: 0;
   transform: none;
@@ -8,15 +8,15 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   width: 100%;
-  height: var(--bottom-nav-height, 88px);
-  min-height: var(--bottom-nav-height, 88px);
-  padding: 8px 18px 7px;
-  gap: 18px;
+  height: var(--bottom-nav-height, 150px);
+  min-height: var(--bottom-nav-height, 150px);
+  padding: 4px 8px 8px;
+  gap: 6px;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(9, 8, 6, 0.78) 34%, rgba(3, 3, 3, 0.96) 100%);
   border-top: none;
   box-shadow: none;
-  flex: 0 0 var(--bottom-nav-height, 88px);
+  flex: 0 0 var(--bottom-nav-height, 150px);
   margin-top: 0;
   box-sizing: border-box;
 }
@@ -25,7 +25,7 @@
   position: relative;
   min-width: 0;
   padding: 0;
-  height: 73px;
+  height: var(--bottom-nav-tab-height, 138px);
   align-self: start;
   background: transparent;
   border: none;
@@ -42,12 +42,12 @@
 }
 
 .bottom-nav__tab img {
-  width: 54px;
-  height: 48px;
+  width: var(--bottom-nav-icon-width, 116px);
+  height: var(--bottom-nav-icon-height, 104px);
   object-fit: contain;
   display: block;
   flex-shrink: 0;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   filter:
     brightness(0.82) saturate(0.86)
     drop-shadow(0 3px 4px rgba(0, 0, 0, 0.9));
@@ -58,7 +58,7 @@
 .bottom-nav__tab span {
   color: var(--text-muted-gold);
   font-family: var(--font-title);
-  font-size: 14px;
+  font-size: var(--bottom-nav-label-size, 18px);
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
@@ -76,13 +76,16 @@
 
 .bottom-nav__tab--active img {
   filter:
-    brightness(1.08) saturate(1.05)
-    drop-shadow(0 0 8px rgba(214, 174, 82, 0.45))
+    brightness(1.2) saturate(1.12)
+    drop-shadow(0 0 10px rgba(242, 212, 122, 0.62))
     drop-shadow(0 3px 4px rgba(0, 0, 0, 0.9));
 }
 
 .bottom-nav__tab--active span {
   color: var(--text-title-gold);
+  text-shadow:
+    0 1px 2px #000,
+    0 0 6px rgba(242, 212, 122, 0.28);
 }
 
 .bottom-nav__tab:active {
